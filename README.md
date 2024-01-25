@@ -21,7 +21,7 @@ Please referance to this code!
 
 ## How to customize touch ripple effect animations?
 refer to css/keyframes.css for see also.
-```
+```css
 @keyframes ripple-fadein {
     from {
         opacity: 0;
