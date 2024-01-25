@@ -20,7 +20,7 @@ Please referance to this code!
 | --ripple-fadeout-duration | Duration until the ripple effect disappears.
 
 ## How to customize touch ripple effect animations?
-refer to css/keyframes.css for see also.
+Refer to css/keyframes.css for further info.
 ```css
 @keyframes ripple-fadein {
     from {
