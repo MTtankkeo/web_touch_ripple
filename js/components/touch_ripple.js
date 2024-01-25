@@ -34,12 +34,12 @@ class TouchRippleElement extends HTMLElement {
             if (asyncWait && wait) {
                 throw "선택 속성인 [await]와 [wait]가 동시 정의되었습니다.";
             }
-            
+
             child.style.position = "relative";
             child.style.overflow = "hidden";
             child.style.cursor = "pointer";
             child.style.userSelect = "none";
-            child.style.transitionDuration = "var(--fade-duration)";
+            child.style.transitionDuration = "var(--ripple-hover-fade-duration)";
             child.onclick = (event) => {
                 if ((wait || asyncWait) && child.getElementsByClassName("ripple").length != 0)
                     return;
