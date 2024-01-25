@@ -1,0 +1,18 @@
+
+:root {
+    --background: white;
+    --ripple: rgba(0, 0, 0, 0.2);
+    --hover: rgba(0, 0, 0, 0.1);
+    --text: black;
+}
+:root {
+    --inner-padding: 15px;
+    --fade-duration: 0.1s;
+}
+
+.dark {
+    --background: black;
+    --ripple: rgba(255, 255, 255, 0.2);
+    --hover: rgba(255, 255, 255, 0.1);
+    --text: white;
+}
