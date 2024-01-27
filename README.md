@@ -1,5 +1,5 @@
 # Touch Ripple For Web
-Use web components to implement touch ripple effects.
+Use web components to implement simple touch ripple effects.
 
 ## How to apply ripple element
 Please referance to this code!
