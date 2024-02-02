@@ -7,14 +7,17 @@
 }
 :root {
     --inner-padding: 15px;
-
+    
     --ripple-hover-fade-duration: 0.1s;
 
     /* Duration until the ripple effect completely fills the element */
-    --ripple-fadein-duration: 0.15s;
+    --ripple-fadein-duration: 0.2s;
 
     /* Duration until the ripple effect disappears */
     --ripple-fadeout-duration: 0.3s;
+
+    /* The blur effect radius of touch ripple. */
+    --ripple-blur-radius: 10px;
 }
 
 .dark {

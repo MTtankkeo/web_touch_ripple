@@ -16,6 +16,10 @@ class TouchRippleElement extends HTMLElement {
     get child() {
         return this.firstElementChild;
     }
+    
+    getPropertyByName(name, scope = this) {
+        return getComputedStyle(scope).getPropertyValue(name);
+    }
 
     connectedCallback() {
         const onTap = this.getAttribute("ontap");
@@ -65,8 +69,19 @@ class TouchRippleElement extends HTMLElement {
         const centerX = child.clientWidth / 2;
         const centerY = child.clientHeight / 2;
 
+        // Initializes setting values.
+        {
+            var blurRadius = this.getPropertyByName("--ripple-blur-radius") || "10px";
+            var blurRadiusValue = Number(blurRadius.replace("px", ""));
+            
+            var rippleColor = this.getPropertyByName("--ripple") || "rgba(255, 255, 255, 0.2)";
+            var rippleFadeInDuration  = this.getPropertyByName("--ripple-fadein-duration")  || "0.2s";
+            var rippleFadeOutDuration = this.getPropertyByName("--ripple-fadeout-duration") || "0.3s";
+        }
+        
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
         rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
+        rippleSize += blurRadiusValue;
 
         const ripple = document.createElement("div");
         ripple.classList.add("ripple");
@@ -78,11 +93,12 @@ class TouchRippleElement extends HTMLElement {
         ripple.style.pointerEvents = "none";
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
-        ripple.style.backgroundColor = "var(--ripple)";
-        ripple.style.animation = "ripple-fadein 0.15s";
+        ripple.style.backgroundColor = `${rippleColor}`;
+        ripple.style.animation = `ripple-fadein ${rippleFadeInDuration}`;
         ripple.style.animationFillMode = "forwards";
+        ripple.style.filter = `blur(${blurRadius})`;
         ripple.onanimationend = () => {
-            ripple.style.animation = "ripple-fadeout 0.3s";
+            ripple.style.animation = `ripple-fadeout ${rippleFadeOutDuration}`;
             if (onTap != null) {
                 onTap();
             }

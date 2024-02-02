@@ -13,11 +13,12 @@ Please referance to this code!
 ```
 
 ## Static variables of CSS
-| Name | Description
-| ------ | ------
-| --ripple-hover-fade-duration | None.
-| --ripple-fadein-duration | Duration until the ripple effect completely fills the element.
-| --ripple-fadeout-duration | Duration until the ripple effect disappears.
+| Name | Description | Default Value
+| ------ | ------ | ------
+| --ripple-hover-fade-duration | None. | 0.1s
+| --ripple-fadein-duration | Duration until the ripple effect completely fills the element. | 0.2s
+| --ripple-fadeout-duration | Duration until the ripple effect disappears. | 0.3s
+| --ripple-blur-radius | The blur effect radius of touch ripple. | 10px
 
 ## How to customize touch ripple effect animations?
 Refer to `css/keyframes.css` for further info.
