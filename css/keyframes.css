@@ -4,11 +4,11 @@
         opacity: 0;
     
         transform-origin: center;
-        transform: scale(0.5);
+        transform: scale(var(--lowerScale, 0.3));
     }
     30% { opacity: 1; }
     
-    to { transform: scale(1); }
+    to { transform: scale(var(--upperScale, 1)); }
 }
 
 @keyframes ripple-fadeout {
