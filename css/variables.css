@@ -19,8 +19,8 @@
     /* The blur effect radius of touch ripple. */
     --ripple-blur-radius: 10px;
 
-    --lowerScale: 0.3;
-    --upperScale: 1;
+    --ripple-lower-scale: 0.3;
+    --ripple-upper-scale: 1;
 }
 
 .dark {
