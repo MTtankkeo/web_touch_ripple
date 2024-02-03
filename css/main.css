@@ -5,6 +5,8 @@
     font-family: 'Spoqa Han Sans Neo';
     font-size: 14px;
     color: var(--text);
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3 { font-size: 18px; }

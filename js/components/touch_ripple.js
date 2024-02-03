@@ -80,8 +80,10 @@ class TouchRippleElement extends HTMLElement {
         }
         
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
-        rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
-        rippleSize += blurRadiusValue;
+        rippleSize += new Point(centerX,centerY).distance(
+            targetX + blurRadiusValue,
+            targetY + blurRadiusValue
+        ) * 2;
 
         const ripple = document.createElement("div");
         ripple.classList.add("ripple");
