@@ -1,3 +1,6 @@
+import { GestureArena } from "../gesture_arena.js";
+import { GestureRecognizer } from "../gesture_recognizer.js";
+import { TapGestureRecognizer } from "../tap.js";
 
 class Point {
     constructor(x, y) {
@@ -13,6 +16,12 @@ class Point {
 }
 
 class TouchRippleElement extends HTMLElement {
+    constructor() {
+        super();
+
+        this.arena = new GestureArena();
+    }
+
     get child() {
         return this.firstElementChild;
     }
@@ -53,6 +62,13 @@ class TouchRippleElement extends HTMLElement {
                 this.show(event, null);
                 eval(onTap);
             };
+
+            this.onpointerdown   = this.arena.pointerDown;
+            this.onpointermove   = this.arena.pointerMove;
+            this.onpointerup     = this.arena.pointerUp;
+            this.onpointercancel = this.arena.pointerCancel;
+
+            this.arena.register(() => new TapGestureRecognizer());
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
                 child.onpointerenter = () => { child.style.backgroundColor = "var(--hover)"; };

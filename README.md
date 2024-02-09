@@ -30,11 +30,11 @@ Refer to `css/keyframes.css` for further info.
         opacity: 0;
     
         transform-origin: center;
-        transform: scale(0.5);
+        transform: scale(var(--ripple-lower-scale, 0.3));
     }
     30% { opacity: 1; }
     
-    to { transform: scale(1); }
+    to { transform: scale(var(--ripple-upper-scale, 1)); }
 }
 
 @keyframes ripple-fadeout {
