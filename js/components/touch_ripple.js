@@ -1,5 +1,5 @@
-import { GestureArena } from "../gesture_arena.js";
-import { GestureRecognizer } from "../gesture_recognizer.js";
+import { GestureArena } from "../gestures/gesture_arena.js";
+import { GestureRecognizer, PointerType } from "../gestures/gesture_recognizer.js";
 import { TapGestureRecognizer } from "../tap.js";
 
 class Point {
@@ -18,14 +18,13 @@ class Point {
 class TouchRippleElement extends HTMLElement {
     constructor() {
         super();
-
         this.arena = new GestureArena();
     }
 
     get child() {
         return this.firstElementChild;
     }
-    
+
     getPropertyByName(name, scope = this) {
         return getComputedStyle(scope).getPropertyValue(name);
     }
@@ -40,12 +39,12 @@ class TouchRippleElement extends HTMLElement {
             const wait = this.hasAttribute("wait");
             const child = this.child;
             if (child == null) {
-                throw "해당 요소는 무조건 자식 요소가 존재해야 합니다.";
+                throw "This element must be exists child element.";
             }
-            
+
             const asyncWait = this.hasAttribute("await");
             if (asyncWait && wait) {
-                throw "선택 속성인 [await]와 [wait]가 동시 정의되었습니다.";
+                throw "A optional attributes [wait] and [wait] are both defined.";
             }
 
             child.style.position = "relative";
@@ -63,12 +62,15 @@ class TouchRippleElement extends HTMLElement {
                 eval(onTap);
             };
 
-            this.onpointerdown   = this.arena.pointerDown;
-            this.onpointermove   = this.arena.pointerMove;
-            this.onpointerup     = this.arena.pointerUp;
-            this.onpointercancel = this.arena.pointerCancel;
+            // A gestures competition related.
+            {
+                this.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
+                this.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
+                this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
+                this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
 
-            this.arena.register(() => new TapGestureRecognizer());
+                this.arena.attach(() => new TapGestureRecognizer());
+            }
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
                 child.onpointerenter = () => { child.style.backgroundColor = "var(--hover)"; };
@@ -94,7 +96,7 @@ class TouchRippleElement extends HTMLElement {
             var rippleFadeInDuration  = this.getPropertyByName("--ripple-fadein-duration")  || "0.2s";
             var rippleFadeOutDuration = this.getPropertyByName("--ripple-fadeout-duration") || "0.3s";
         }
-        
+
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
         rippleSize += new Point(centerX,centerY).distance(
             targetX + blurRadiusValue,
