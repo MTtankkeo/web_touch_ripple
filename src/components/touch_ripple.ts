@@ -1,28 +1,25 @@
-import { GestureArena } from "../gestures/gesture_arena.js";
-import { GestureRecognizer, PointerType } from "../gestures/gesture_recognizer.js";
-import { TapGestureRecognizer } from "../tap.js";
+import { GestureArena } from "../gesture_arena";
+import { TapGestureRecognizer } from "../gesture_recognizer";
+import { PointerType } from "../type";
 
 class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+    constructor(
+        public x: number,
+        public y: number
+    ) {}
 
-    distance(x, y) {
+    distance(x: number, y: number) {
         let a = this.x - x;
         let b = this.y - y;
         return Math.sqrt(a * a + b * b);
     }
 }
 
-class TouchRippleElement extends HTMLElement {
-    constructor() {
-        super();
-        this.arena = new GestureArena();
-    }
+export class TouchRippleElement extends HTMLElement {
+    arena: GestureArena = new GestureArena();
 
-    get child() {
-        return this.firstElementChild;
+    get child(): HTMLElement {
+        return this.firstElementChild as HTMLElement;
     }
 
     getPropertyByName(name, scope = this) {
@@ -69,7 +66,7 @@ class TouchRippleElement extends HTMLElement {
                 this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
                 this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
 
-                this.arena.attach(() => new TapGestureRecognizer());
+                this.arena.registerBuilder(() => new TapGestureRecognizer());
             }
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
@@ -95,6 +92,8 @@ class TouchRippleElement extends HTMLElement {
             var rippleColor = this.getPropertyByName("--ripple") || "rgba(255, 255, 255, 0.2)";
             var rippleFadeInDuration  = this.getPropertyByName("--ripple-fadein-duration")  || "0.2s";
             var rippleFadeOutDuration = this.getPropertyByName("--ripple-fadeout-duration") || "0.3s";
+
+            this.getAttribute("attribute");
         }
 
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
