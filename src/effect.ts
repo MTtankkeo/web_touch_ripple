@@ -22,7 +22,8 @@ export class TouchRippleEffect {
 
     set status(newValue: TouchRippleEffectStatus) {
         if (this._status != newValue) {
-            this._statusListeners.forEach(l => l(this._status = newValue));
+            this._status = newValue;
+            this._statusListeners.forEach(l => l(newValue));
         }
     }
 
