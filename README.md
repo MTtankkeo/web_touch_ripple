@@ -1,6 +1,10 @@
 # Touch Ripple For Web
 Use web components to implement simple touch ripple effects.
 
+## Preview
+> This may be different from the real thing (by gif)
+![ezgif-2-d586f8046c](https://github.com/MTtankkeo/web_touch_ripple/assets/122026021/eb0c866c-fb18-4f2c-8f08-c706214e01f9)
+
 ## How to apply ripple element
 Please referance to this code!
 ```html
