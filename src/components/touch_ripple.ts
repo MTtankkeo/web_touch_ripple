@@ -66,34 +66,11 @@ export class TouchRippleElement extends HTMLElement {
 
             // A gestures competition related.
             {
-                const _clearEventListener = () => {
-                    document.removeEventListener("pointerup", _handlePointerUp);
-                    document.removeEventListener("pointermove", _handlePointerMove);
-                }
-                const _handlePointerUp = (event: PointerEvent) => {
-                    this.arena.handlePointer(event, PointerType.UP);
-                    _clearEventListener();
-                }
-                const _handlePointerMove = (event: PointerEvent) => {
-                    this.arena.handlePointer(event, PointerType.MOVE);
-                }
-                const _handlePointerCancel = (event: PointerEvent) => {
-                    this.arena.handlePointer(event, PointerType.CANCEL);
-                    _clearEventListener();
-                }
-
-                document.addEventListener("pointerup", _handlePointerUp);
-                document.addEventListener("pointermove", _handlePointerMove);
-
-                this.onpointerdown = event => {
-                    this.arena.handlePointer(event, PointerType.DOWN);
-
-                    document.addEventListener("pointerup", _handlePointerUp);
-                    document.addEventListener("pointermove", _handlePointerMove);
-                };
-                this.onpointercancel = _handlePointerCancel;
-                this.onpointerleave = _handlePointerCancel;
-                
+                this.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
+                this.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
+                this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
+                this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
+                this.onpointerleave  = e => this.arena.handlePointer(e, PointerType.CANCEL);
                 this.initBuiler();
             }
 
