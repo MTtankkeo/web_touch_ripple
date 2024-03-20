@@ -1,4 +1,4 @@
-import { TouchRippleEffect } from "../effect";
+import { TouchRippleEffect, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
 import { TapGestureRecognizer } from "../gestures/tap";
 import { PointerPosition, PointerType } from "../type";
@@ -22,8 +22,8 @@ export class TouchRippleElement extends HTMLElement {
             return new TapGestureRecognizer(
                 (p) => this.showEffect(p, () => console.log("onTap"), false),
                 (p) => this.showEffect(p, () => console.log("onTapRejectable"), true),
-                () => console.log("onTapAccept"),
-                () => console.log("onTapReject"),
+                () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
+                () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
                 150
             );
         });
@@ -52,17 +52,6 @@ export class TouchRippleElement extends HTMLElement {
             child.style.cursor = "pointer";
             child.style.userSelect = "none";
             child.style.transitionDuration = "var(--ripple-hover-fade-duration)";
-            /*
-            child.onclick = (event) => {
-                if ((wait || asyncWait) && child.getElementsByClassName("ripple").length != 0)
-                    return;
-                if (wait) {
-                    return this.show(event, () => eval(onTap));
-                }
-                this.show(event, null);
-                eval(onTap);
-            };
-            */
 
             // A gestures competition related.
             {
@@ -86,13 +75,13 @@ export class TouchRippleElement extends HTMLElement {
         callback: Function,
         isRejectable: boolean,
     ) {
-        const effect = new TouchRippleEffect(
+        this.activeEffect = new TouchRippleEffect(
             position,
             callback,
             isRejectable,
         );
         
-        this.child.appendChild(effect.createElement(this, this.child));
+        this.child.appendChild(this.activeEffect.createElement(this, this.child));
     }
 }
 

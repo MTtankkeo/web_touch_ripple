@@ -18,6 +18,8 @@ export class TouchRippleEffect {
         public isRejectable: boolean,
     ) { }
 
+    get status() { return this._status };
+
     set status(newValue: TouchRippleEffectStatus) {
         if (this._status != newValue) {
             this._statusListeners.forEach(l => l(this._status = newValue));
@@ -26,6 +28,19 @@ export class TouchRippleEffect {
 
     set statusListener(callback: TouchRippleEffectStatusListener) {
         this._statusListeners.push(callback);
+    }
+
+    fadeout(
+        parent: HTMLElement,
+        target: HTMLElement,
+        duration: string,
+    ) {
+        target.style.animation = `ripple-fadeout ${duration}`;
+        target.onanimationend = () => parent.removeChild(target);
+    }
+
+    notify() {
+        if (this.callback) this.callback();
     }
     
     createElement(
@@ -69,13 +84,18 @@ export class TouchRippleEffect {
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
-        // TODO: Rejectable 상태를 고려하여 적절하게 이벤트를 관리해야 함.
         ripple.onanimationend = () => {
-            ripple.style.animation = `ripple-fadeout ${rippleFadeOutDuration}`;
-            if (this.callback != null) {
-                this.callback();
+            if (this.isRejectable && this.status == TouchRippleEffectStatus.NONE) {
+                this.statusListener = (status) => {
+                    if (status == TouchRippleEffectStatus.ACCEPTED) {
+                        this.notify();
+                    }
+                    this.fadeout(target, ripple, rippleFadeOutDuration);
+                }
+            } else {
+                this.notify();
+                this.fadeout(target, ripple, rippleFadeOutDuration);
             }
-            ripple.onanimationend = () => target.removeChild(ripple);
         };
 
         return ripple;
