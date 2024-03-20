@@ -1,6 +1,6 @@
-import { GestureArena } from "../gesture_arena";
-import { TapGestureRecognizer } from "../gesture_recognizer";
-import { PointerType } from "../type";
+import { GestureArena } from "../gestures/gesture_arena";
+import { TapGestureRecognizer } from "../gestures/tap";
+import { PointerPosition, PointerType } from "../type";
 
 class Point {
     constructor(
@@ -49,6 +49,7 @@ export class TouchRippleElement extends HTMLElement {
             child.style.cursor = "pointer";
             child.style.userSelect = "none";
             child.style.transitionDuration = "var(--ripple-hover-fade-duration)";
+            /*
             child.onclick = (event) => {
                 if ((wait || asyncWait) && child.getElementsByClassName("ripple").length != 0)
                     return;
@@ -58,15 +59,47 @@ export class TouchRippleElement extends HTMLElement {
                 this.show(event, null);
                 eval(onTap);
             };
+            */
 
             // A gestures competition related.
             {
-                this.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
-                this.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
-                this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
-                this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
+                const _clearEventListener = () => {
+                    document.removeEventListener("pointerup", _handlePointerUp);
+                    document.removeEventListener("pointermove", _handlePointerMove);
+                }
+                const _handlePointerUp = (event: PointerEvent) => {
+                    this.arena.handlePointer(event, PointerType.UP);
+                    _clearEventListener();
+                }
+                const _handlePointerMove = (event: PointerEvent) => {
+                    this.arena.handlePointer(event, PointerType.MOVE);
+                }
+                const _handlePointerCancel = (event: PointerEvent) => {
+                    this.arena.handlePointer(event, PointerType.CANCEL);
+                    _clearEventListener();
+                }
 
-                this.arena.registerBuilder(() => new TapGestureRecognizer());
+                document.addEventListener("pointerup", _handlePointerUp);
+                document.addEventListener("pointermove", _handlePointerMove);
+
+                this.onpointerdown = event => {
+                    this.arena.handlePointer(event, PointerType.DOWN);
+
+                    document.addEventListener("pointerup", _handlePointerUp);
+                    document.addEventListener("pointermove", _handlePointerMove);
+                };
+                this.onpointercancel = _handlePointerCancel;
+                this.onpointerleave = _handlePointerCancel;
+
+                this.arena.registerBuilder(() => {
+                    return new TapGestureRecognizer(
+                        (p) => this.show(p, () => console.log("onTap")),
+                        () => console.log("onTapRejectable"),
+                        () => console.log("onTapAccept"),
+                        () => console.log("onTapReject"),
+                        500
+                    );
+                });
             }
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
@@ -76,11 +109,11 @@ export class TouchRippleElement extends HTMLElement {
         });
     }
 
-    show(event, onTap) {
+    show(position: PointerPosition, onTap: Function) {
         const child = this.child;
         const targetRact = child.getBoundingClientRect();
-        const targetX = event.clientX - targetRact.left;
-        const targetY = event.clientY - targetRact.top;
+        const targetX = position.x - targetRact.left;
+        const targetY = position.y - targetRact.top;
         const centerX = child.clientWidth / 2;
         const centerY = child.clientHeight / 2;
 
