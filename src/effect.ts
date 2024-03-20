@@ -9,14 +9,19 @@ export enum TouchRippleEffectStatus {
 }
 
 export class TouchRippleEffect {
-    private _status = TouchRippleEffectStatus.NONE;
+    private _status: TouchRippleEffectStatus;
     private _statusListeners: TouchRippleEffectStatusListener[] = [];
 
     constructor(
         public position: PointerPosition,
         public callback: Function,
         public isRejectable: boolean,
-    ) { }
+        public isWait: boolean
+    ) {
+        isRejectable
+            ? this._status = TouchRippleEffectStatus.NONE
+            : this._status = TouchRippleEffectStatus.ACCEPTED;
+    }
 
     get status() { return this._status };
 
@@ -85,16 +90,25 @@ export class TouchRippleEffect {
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
+        if (!this.isWait) {
+            if (this.status == TouchRippleEffectStatus.ACCEPTED) this.notify();
+            if (this.status == TouchRippleEffectStatus.NONE) {
+                this.statusListener = (status) => {
+                    if (status == TouchRippleEffectStatus.ACCEPTED) this.notify();
+                }
+            }
+        }
+
         ripple.onanimationend = () => {
             if (this.isRejectable && this.status == TouchRippleEffectStatus.NONE) {
                 this.statusListener = (status) => {
                     if (status == TouchRippleEffectStatus.ACCEPTED) {
-                        this.notify();
+                        if(this.isWait) this.notify();
                     }
                     this.fadeout(target, ripple, rippleFadeOutDuration);
                 }
             } else {
-                this.notify();
+                if (this.isWait) this.notify();
                 this.fadeout(target, ripple, rippleFadeOutDuration);
             }
         };

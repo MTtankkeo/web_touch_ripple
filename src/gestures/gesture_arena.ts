@@ -65,7 +65,9 @@ export class GestureArena {
 
         // When the pointer are received all, accepts the last survivor.
         if (type == PointerType.UP) {
-            if (this.recognizers.length == 1) this.acceptWith(this.recognizers[0]);
+            queueMicrotask(() => {
+                if (this.recognizers.length == 1) this.acceptWith(this.recognizers[0]);
+            });
         }
 
         this.recognizers.forEach(r => r.handlePointer(event, type));

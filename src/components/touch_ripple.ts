@@ -17,16 +17,20 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     /** Initializes gesture-recognizer builders for arena. */
-    initBuiler() {
-        this.arena.registerBuilder(() => {
-            return new TapGestureRecognizer(
-                (p) => this.showEffect(p, () => console.log("onTap"), false),
-                (p) => this.showEffect(p, () => console.log("onTapRejectable"), true),
-                () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
-                () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
-                150
-            );
-        });
+    initBuiler(
+        onTap?: Function,
+    ) {
+        if (onTap != null) {
+            this.arena.registerBuilder(() => {
+                return new TapGestureRecognizer(
+                    (p) => this.showEffect(p, onTap, false),
+                    (p) => this.showEffect(p, onTap, true),
+                    () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
+                    () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
+                    150
+                );
+            });
+        }
     }
 
     connectedCallback() {
@@ -36,15 +40,9 @@ export class TouchRippleElement extends HTMLElement {
         }
 
         requestAnimationFrame(() => {
-            const wait = this.hasAttribute("wait");
             const child = this.child;
             if (child == null) {
                 throw "This element must be exists child element.";
-            }
-
-            const asyncWait = this.hasAttribute("await");
-            if (asyncWait && wait) {
-                throw "A optional attributes [wait] and [wait] are both defined.";
             }
 
             child.style.position = "relative";
@@ -60,7 +58,7 @@ export class TouchRippleElement extends HTMLElement {
                 this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
                 this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
                 this.onpointerleave  = e => this.arena.handlePointer(e, PointerType.CANCEL);
-                this.initBuiler();
+                this.initBuiler(() => eval(onTap));
             }
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
@@ -79,6 +77,7 @@ export class TouchRippleElement extends HTMLElement {
             position,
             callback,
             isRejectable,
+            this.hasAttribute("wait")
         );
         
         this.child.appendChild(this.activeEffect.createElement(this, this.child));
