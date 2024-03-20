@@ -16,9 +16,7 @@ export class TouchRippleEffect {
         public position: PointerPosition,
         public callback: Function,
         public isRejectable: boolean,
-    ) {
-        // ...
-    }
+    ) { }
 
     set status(newValue: TouchRippleEffectStatus) {
         if (this._status != newValue) {
@@ -70,6 +68,8 @@ export class TouchRippleEffect {
         ripple.style.animation = `ripple-fadein ${rippleFadeInDuration}`;
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
+
+        // TODO: Rejectable 상태를 고려하여 적절하게 이벤트를 관리해야 함.
         ripple.onanimationend = () => {
             ripple.style.animation = `ripple-fadeout ${rippleFadeOutDuration}`;
             if (this.callback != null) {
