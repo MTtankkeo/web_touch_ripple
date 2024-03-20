@@ -39,6 +39,9 @@ export class TouchRippleElement extends HTMLElement {
             throw "Required property value [ontap] is undefined";
         }
 
+        // Sets a transparent to a touch effect color of chrome.
+        this.style["-webkit-tap-highlight-color"] = "transparent";
+
         requestAnimationFrame(() => {
             const child = this.child;
             if (child == null) {
@@ -61,9 +64,12 @@ export class TouchRippleElement extends HTMLElement {
                 this.initBuiler(() => eval(onTap));
             }
 
-            if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
-                child.onpointerenter = () => { child.style.backgroundColor = "var(--ripple-hover)"; };
-                child.onpointerleave = () => { child.style.backgroundColor = ""; };
+            if (!('ontouchstart' in window)) {
+                child.style.transitionDuration = "var(--ripple-hover-fade-duration, 0.2s)";
+                child.style.transitionProperty = "background-color";
+
+                child.onmouseenter = () => child.style.backgroundColor = "var(--ripple-hover)";
+                child.onmouseleave = () => child.style.backgroundColor = "";
             }
         });
     }
