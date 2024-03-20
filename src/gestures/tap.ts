@@ -17,10 +17,12 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     }
 
     pointerDown(position: PointerPosition): void {
-        this.timerId = setTimeout(() => {
+        const _handleRejectalbe = () => {
             this.isRejectable = true;
             this.onTapRejectable(position);
-        }, this.previewDuration);
+        }
+
+        this.timerId = setTimeout(_handleRejectalbe, this.previewDuration);
     }
 
     dispose(): void {
