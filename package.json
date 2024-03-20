@@ -1,17 +1,23 @@
 {
   "name": "web-touch-ripple",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Visual representation of the pointer event to a user.",
+  "repository": "https://github.com/MTtankkeo/web_touch_ripple",
+  "bugs": "https://github.com/MTtankkeo/web_touch_ripple/issues",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "rollup -c"
   },
   "keywords": [
-    "front-end",
+    "web",
+    "frontend",
     "client-side",
     "touch",
-    "effect"
+    "effect",
+    "touch effect"
   ],
   "author": "Dev Ttangkong",
   "license": "MIT",

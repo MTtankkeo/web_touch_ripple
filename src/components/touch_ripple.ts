@@ -64,13 +64,15 @@ export class TouchRippleElement extends HTMLElement {
                 this.initBuiler(() => eval(onTap));
             }
 
+            /*
             if (!('ontouchstart' in window)) {
                 child.style.transitionDuration = "var(--ripple-hover-fade-duration, 0.2s)";
                 child.style.transitionProperty = "background-color";
 
-                child.onmouseenter = () => child.style.backgroundColor = "var(--ripple-hover)";
-                child.onmouseleave = () => child.style.backgroundColor = "";
+                child.onmouseenter = () => this.hoverStart();
+                child.onmouseleave = () => this.hoverStart();
             }
+            */
         });
     }
 

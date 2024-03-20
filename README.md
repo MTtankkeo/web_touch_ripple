@@ -21,8 +21,6 @@ Please referance to this code!
 | Name | Description | Default Value
 | ------ | ------ | ------
 | --ripple | background color of touch-ripple effect. | rgba(0, 0, 0, 0.2)
-| --ripple-hover | background color when hover. | none
-| --ripple-hover-fade-duration | None. | 0.2s
 | --ripple-fadein-duration | Duration until the ripple effect completely fills the element. | 0.2s
 | --ripple-fadeout-duration | Duration until the ripple effect disappears. | 0.3s
 | --ripple-blur-radius | The blur effect radius of touch ripple. | 10px
