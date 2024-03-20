@@ -1,11 +1,9 @@
 
 :root {
     --ripple: rgba(0, 0, 0, 0.2);
-    --hover: rgba(0, 0, 0, 0.1);
+    --ripple-hover: rgba(0, 0, 0, 0.1);
 }
 :root {
-    --inner-padding: 15px;
-    
     --ripple-hover-fade-duration: 0.1s;
 
     /* Duration until the ripple effect completely fills the element */

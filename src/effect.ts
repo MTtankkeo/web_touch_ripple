@@ -39,9 +39,8 @@ export class TouchRippleEffect {
     fadeout(
         parent: HTMLElement,
         target: HTMLElement,
-        duration: string,
     ) {
-        target.style.animation = `ripple-fadeout ${duration}`;
+        target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.3s)";
         target.onanimationend = () => parent.removeChild(target);
     }
 
@@ -51,7 +50,7 @@ export class TouchRippleEffect {
     
     createElement(
         parent: TouchRippleElement,
-        target: HTMLElement,
+        target: HTMLElement
     ) {
         const targetRact = parent.getBoundingClientRect();
         const targetX = this.position.x - targetRact.left;
@@ -63,10 +62,6 @@ export class TouchRippleEffect {
         {
             var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "10px";
             var blurRadiusValue = Number(blurRadius.replace("px", ""));
-            
-            var rippleColor = parent.getPropertyByName("--ripple") || "rgba(0, 0, 0, 0.2)";
-            var rippleFadeInDuration  = parent.getPropertyByName("--ripple-fadein-duration")  || "0.2s";
-            var rippleFadeOutDuration = parent.getPropertyByName("--ripple-fadeout-duration") || "0.3s";
 
             parent.getAttribute("attribute");
         }
@@ -85,8 +80,8 @@ export class TouchRippleEffect {
         ripple.style.pointerEvents = "none";
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
-        ripple.style.backgroundColor = `${rippleColor}`;
-        ripple.style.animation = `ripple-fadein ${rippleFadeInDuration}`;
+        ripple.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
+        ripple.style.animation = "ripple-fadein var(--ripple-fadein-duration, 0.2s)";
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
@@ -105,11 +100,11 @@ export class TouchRippleEffect {
                     if (status == TouchRippleEffectStatus.ACCEPTED) {
                         if(this.isWait) this.notify();
                     }
-                    this.fadeout(target, ripple, rippleFadeOutDuration);
+                    this.fadeout(target, ripple);
                 }
             } else {
                 if (this.isWait) this.notify();
-                this.fadeout(target, ripple, rippleFadeOutDuration);
+                this.fadeout(target, ripple);
             }
         };
 

@@ -62,7 +62,7 @@ export class TouchRippleElement extends HTMLElement {
             }
 
             if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
-                child.onpointerenter = () => { child.style.backgroundColor = "var(--hover)"; };
+                child.onpointerenter = () => { child.style.backgroundColor = "var(--ripple-hover)"; };
                 child.onpointerleave = () => { child.style.backgroundColor = ""; };
             }
         });

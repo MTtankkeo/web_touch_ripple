@@ -15,6 +15,8 @@ Please referance to this code!
 ## Static variables of CSS
 | Name | Description | Default Value
 | ------ | ------ | ------
+| --ripple | background color of touch-ripple effect. | 0.1s
+| --ripple-hover | background color when hover. | 0.1s
 | --ripple-hover-fade-duration | None. | 0.1s
 | --ripple-fadein-duration | Duration until the ripple effect completely fills the element. | 0.2s
 | --ripple-fadeout-duration | Duration until the ripple effect disappears. | 0.3s
