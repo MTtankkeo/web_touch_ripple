@@ -12,7 +12,7 @@ export class TouchRippleElement extends HTMLElement {
         return this.firstElementChild as HTMLElement;
     }
 
-    getPropertyByName(name, scope = this) {
+    getPropertyByName(name: string, scope = this) {
         return getComputedStyle(scope).getPropertyValue(name);
     }
 

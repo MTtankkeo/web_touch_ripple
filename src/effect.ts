@@ -64,7 +64,7 @@ export class TouchRippleEffect {
             var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "10px";
             var blurRadiusValue = Number(blurRadius.replace("px", ""));
             
-            var rippleColor = parent.getPropertyByName("--ripple") || "rgba(255, 255, 255, 0.2)";
+            var rippleColor = parent.getPropertyByName("--ripple") || "rgba(0, 0, 0, 0.2)";
             var rippleFadeInDuration  = parent.getPropertyByName("--ripple-fadein-duration")  || "0.2s";
             var rippleFadeOutDuration = parent.getPropertyByName("--ripple-fadeout-duration") || "0.3s";
 
