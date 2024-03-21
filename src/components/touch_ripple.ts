@@ -10,7 +10,7 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
-    set ontap(callback: Function) {
+    public set ontap(callback: Function) {
         this._ontap = callback;
         this.initBuiler();
     }
