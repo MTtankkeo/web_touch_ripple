@@ -24,7 +24,7 @@ This is a solution of converting a string into a function and using it.
 ```
 
 ### Locally
-This is the most ideal and widely used method.
+This is the most ideal and widely used solution.
 
 ```html
 <touch-ripple id="ripple">...</touch-ripple>
