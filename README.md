@@ -9,7 +9,7 @@ This is preview of simplest example.
 ![ezgif-2-d586f8046c](https://github.com/MTtankkeo/web_touch_ripple/assets/122026021/eb0c866c-fb18-4f2c-8f08-c706214e01f9)
 
 ## How to apply ripple element
-Please referance to this code!
+Please referance to a codes below!
 
 ### Staticly
 This is a solution of converting a string into a function and using it.
@@ -33,7 +33,9 @@ This is the most ideal and widely used solution.
 <script>
     // in script.
     const ripple = document.getElementById("ripple");
-          ripple.ontap = () => console.log("hello world!");
+
+    // Called when the user taps or clicks.
+    ripple.ontap = () => console.log("hello world!");
 </script>
 ```
 
