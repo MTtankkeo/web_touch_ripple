@@ -8,6 +8,12 @@ Use web components to implement simple touch ripple effects.
 
 ## How to apply ripple element
 Please referance to this code!
+
+### Staticly
+This is a solution of converting a string into a function and using it.
+
+> Not recommended to use it in this way and it can mainly be used for debugging purposes.
+
 ```html
 <!-- Called when the user taps or clicks. -->
 <touch-ripple ontap="console.log('hello world!')">
@@ -15,6 +21,18 @@ Please referance to this code!
         Tappabe
     </h1>
 </touch-ripple>
+```
+
+### Locally
+This is the most ideal and widely used method.
+
+```html
+<touch-ripple id="ripple">...</touch-ripple>
+<script>
+    // in script.
+    const ripple = document.getElementById("ripple");
+          ripple.ontap = () => console.log("hello world!");
+</script>
 ```
 
 ## Static variables of CSS

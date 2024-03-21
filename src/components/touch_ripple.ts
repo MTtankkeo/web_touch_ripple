@@ -8,6 +8,13 @@ export class TouchRippleElement extends HTMLElement {
 
     activeEffect: TouchRippleEffect;
 
+    /** Called when a user taps or clicks. */
+    private _ontap: Function;
+    set ontap(callback: Function) {
+        this._ontap = callback;
+        this.initBuiler();
+    }
+
     get child(): HTMLElement {
         return this.firstElementChild as HTMLElement;
     }
@@ -17,14 +24,14 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     /** Initializes gesture-recognizer builders for arena. */
-    initBuiler(
-        onTap?: Function,
-    ) {
-        if (onTap != null) {
+    initBuiler() {
+        this.arena.reset();
+        
+        if (this._ontap != null) {
             this.arena.registerBuilder(() => {
                 return new TapGestureRecognizer(
-                    (p) => this.showEffect(p, onTap, false),
-                    (p) => this.showEffect(p, onTap, true),
+                    (p) => this.showEffect(p, this._ontap, false),
+                    (p) => this.showEffect(p, this._ontap, true),
                     () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
                     () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
                     150
@@ -34,11 +41,6 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     connectedCallback() {
-        const onTap = this.getAttribute("ontap");
-        if (onTap == null) {
-            throw "Required property value [ontap] is undefined";
-        }
-
         // Sets a transparent to a touch effect color of chrome.
         this.style["-webkit-tap-highlight-color"] = "transparent";
 
@@ -61,7 +63,6 @@ export class TouchRippleElement extends HTMLElement {
                 this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
                 this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
                 this.onpointerleave  = e => this.arena.handlePointer(e, PointerType.CANCEL);
-                this.initBuiler(() => eval(onTap));
             }
 
             /*
@@ -89,6 +90,17 @@ export class TouchRippleElement extends HTMLElement {
         );
         
         this.child.appendChild(this.activeEffect.createElement(this, this.child));
+    }
+
+    /** Returns a names of a touch-ripple events. */
+    static get observedAttributes() {
+        return ["ontap"];
+    }
+
+    attributeChangedCallback(attrName, oldVal, newVal) {
+        if (newVal != null) {
+            if (attrName == "ontap") this.ontap = () => eval(newVal);
+        }
     }
 }
 

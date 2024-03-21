@@ -38,6 +38,12 @@ export class GestureArena {
         this.acceptBy(target);
     }
 
+    /** Resets builders and recognizers in arena. */
+    reset() {
+        this.builders = [];
+        this.recognizers = [];
+    }
+
     createRecognizer(builder: GestureRecognizerBuilder): GestureRecognizer {
         const recognizer = builder();
 
