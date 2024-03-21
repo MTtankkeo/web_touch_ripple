@@ -17,7 +17,7 @@ This is a solution of converting a string into a function and using it.
 > Not recommended to use it in this way and it can mainly be used for debugging purposes.
 
 ```html
-<!-- Called when the user taps or clicks. -->
+<!-- Called when a user taps or clicks. -->
 <touch-ripple ontap="console.log('hello world!')">
     <h1 style="padding: 15px;">
         Tappabe
@@ -34,7 +34,7 @@ This is the most ideal and widely used solution.
     // in script.
     const ripple = document.getElementById("ripple");
 
-    // Called when the user taps or clicks.
+    // Called when a user taps or clicks.
     ripple.ontap = () => console.log("hello world!");
 </script>
 ```
