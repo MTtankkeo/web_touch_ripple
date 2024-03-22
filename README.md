@@ -39,11 +39,11 @@ This is the most ideal and widely used solution.
 </script>
 ```
 
-### How to wait callback until ripple effect are spread all?
+### How to wait callback until a ripple effect are spread all?
 This is can implement by adding a attribute `wait` to a touch-ripple element.
 
 ```html
-<!-- For add attribute wait. -->
+<!-- Called when a ripple effect has spread all, after a user taps and clicks. -->
 <touch-ripple ontap="() => ..." wait>
 ```
 
