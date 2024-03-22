@@ -39,6 +39,39 @@ This is the most ideal and widely used solution.
 </script>
 ```
 
+### How to wait invoke until ripple effect are spread all?
+This is can implement by adding a attribute `wait` to a touch-ripple element.
+
+```html
+<!-- For add attribute wait. -->
+<touch-ripple ontap="() => ..." wait>
+```
+
+### How to use with react in typescript?
+This is can easily implement this by adding the code below or modifying some of it.
+
+```ts
+export function TouchRipple({onTap, wait, children}: {
+    onTap?: Function,
+    wait?: boolean,
+    children: VNode,
+}) {
+    const ref = useRef<TouchRippleElement>();
+
+    useLayoutEffect(() => {
+        const ripple = ref.current;
+        ripple.ontap = onTap;
+        
+        wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
+    }, [onTap, wait]);
+
+    return (
+        /** @ts-ignore */
+        <touch-ripple ref={ref}>{children}</touch-ripple>
+    );
+}
+```
+
 ## Static variables of CSS
 | Name | Description | Default Value
 | ------ | ------ | ------

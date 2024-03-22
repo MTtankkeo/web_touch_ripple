@@ -52,8 +52,8 @@ export class TouchRippleElement extends HTMLElement {
 
             child.style.position = "relative";
             child.style.overflow = "hidden";
-            child.style.cursor = "pointer";
             child.style.userSelect = "none";
+            // child.style.cursor = "pointer";
             // child.style.transitionDuration = "var(--ripple-hover-fade-duration)";
 
             // A gestures competition related.
