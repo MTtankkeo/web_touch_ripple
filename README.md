@@ -2,7 +2,7 @@
 Use web components to implement efficient and simple touch ripple effects.
 
 ## Preview
-This is preview of simplest example.
+This is just a preview of a simple example of that package.
 
 > This may be different from the real thing (by gif)
 
