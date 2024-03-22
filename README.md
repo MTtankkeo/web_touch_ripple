@@ -50,7 +50,7 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 ### How to use with react in typescript?
 This is can easily implement this by adding the code below or modifying some of it.
 
-```ts
+```tsx
 export function TouchRipple({onTap, wait, children}: {
     onTap?: Function,
     wait?: boolean,
