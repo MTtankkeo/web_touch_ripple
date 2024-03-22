@@ -39,7 +39,7 @@ This is the most ideal and widely used solution.
 </script>
 ```
 
-### How to wait invoke until ripple effect are spread all?
+### How to wait callback until ripple effect are spread all?
 This is can implement by adding a attribute `wait` to a touch-ripple element.
 
 ```html
