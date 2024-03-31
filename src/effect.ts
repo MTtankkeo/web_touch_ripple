@@ -55,8 +55,8 @@ export class TouchRippleEffect {
         const targetRact = parent.getBoundingClientRect();
         const targetX = this.position.x - targetRact.left;
         const targetY = this.position.y - targetRact.top;
-        const centerX = parent.clientWidth / 2;
-        const centerY = parent.clientHeight / 2;
+        const centerX = parent.offsetWidth / 2;
+        const centerY = parent.offsetHeight / 2;
 
         // Initializes setting values.
         {

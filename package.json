@@ -1,6 +1,6 @@
 {
   "name": "web-touch-ripple",
-  "version": "1.1.0-alpha.3",
+  "version": "1.1.0-alpha.4",
   "description": "Visual representation of the pointer event to a user.",
   "repository": "https://github.com/MTtankkeo/web_touch_ripple",
   "bugs": "https://github.com/MTtankkeo/web_touch_ripple/issues",
@@ -9,7 +9,8 @@
   "types": "dist/types/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
   },
   "keywords": [
     "web",
