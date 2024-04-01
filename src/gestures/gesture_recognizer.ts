@@ -7,7 +7,11 @@ export enum GestureRecognizerResult {
 
 /* This abstract class implements a fundamental gesture recognizer. */
 export abstract class GestureRecognizer {
+    /** A listeners that is called when accpeted or rejected. */
     listeners: GestureRecognizerListener[] = [];
+
+    /** Whether can be accept naturally(case of being left alone and accepted) */
+    isHold: boolean = false;
 
     abstract handlePointer(
         event: PointerEvent,
@@ -16,6 +20,9 @@ export abstract class GestureRecognizer {
 
     accept() { this.perform(GestureRecognizerResult.ACCEPT), this.onAccept(); }
     reject() { this.perform(GestureRecognizerResult.REJECT), this.onReject(); }
+    
+    hold() { this.isHold = true; }
+    release() { this.isHold = false; }
 
     onAccept() {}
     onReject() {}

@@ -4,6 +4,7 @@ import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     timerId: NodeJS.Timeout;
 
+    /** Whether the gesture can be rejected in the middle. */
     isRejectable: boolean = false;
     
     constructor(

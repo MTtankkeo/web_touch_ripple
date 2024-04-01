@@ -25,6 +25,7 @@ export class GestureArena {
     /** Rejects a given recognizer on this arena. */
     rejectBy(target: GestureRecognizer) {
         this.detach(target);
+        this.checkCycle();
     }
 
     /** Rejects all a recognizers except a given recognizer. */
@@ -34,8 +35,7 @@ export class GestureArena {
     }
 
     acceptWith(target: GestureRecognizer) {
-        target.accept();
-        this.acceptBy(target);
+        target.accept(), this.acceptBy(target);
     }
 
     /** Resets builders and recognizers in arena. */
@@ -61,6 +61,13 @@ export class GestureArena {
         // When possible, creates a recognizers by builder.
         if (this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
+        }
+
+        // Accept a last recognizer that is survivor.
+        if (this.recognizers.length == 1) {
+            const last = this.recognizers[0];
+
+            if(last.isHold == false) this.acceptWith(last);
         }
     }
 

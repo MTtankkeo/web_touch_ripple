@@ -1,17 +1,30 @@
 import { TouchRippleEffect, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
-import { TapGestureRecognizer } from "../gestures/tap";
 import { PointerPosition, PointerType } from "../type";
+import { TapGestureRecognizer } from "../gestures/tap";
+import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
 
 export class TouchRippleElement extends HTMLElement {
     arena: GestureArena = new GestureArena();
 
+    /** Is defined for update the status of added a touch effect. */
     activeEffect: TouchRippleEffect;
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
+    
+    /** Sets a callback function that is called when a user taps or clicks. */
     set ontap(callback: Function) {
         this._ontap = callback;
+        this.initBuiler();
+    }
+
+    /** Called when a user double taps of double clicks. */
+    private _ondoubletap: Function;
+    
+    /** Sets a callback function that is called when a user double taps or double clicks. */
+    set ondoubletap(callback: Function) {
+        this._ondoubletap = callback;
         this.initBuiler();
     }
 
@@ -28,15 +41,21 @@ export class TouchRippleElement extends HTMLElement {
         this.arena.reset();
         
         if (this._ontap != null) {
-            this.arena.registerBuilder(() => {
-                return new TapGestureRecognizer(
+            this.arena.registerBuilder(() => 
+                new TapGestureRecognizer(
                     (p) => this.showEffect(p, this._ontap, false),
                     (p) => this.showEffect(p, this._ontap, true),
                     () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
                     () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
                     150
-                );
-            });
+                )
+            );
+        }
+
+        if (this._ondoubletap != null) {
+            this.arena.registerBuilder(() =>
+                new DoubleTapGestureRecognizer((p) => this.showEffect(p, this._ondoubletap, false))
+            );
         }
     }
 
@@ -94,12 +113,17 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Returns a names of a touch-ripple events. */
     static get observedAttributes() {
-        return ["ontap"];
+        return ["ontap", "ondoubletap"];
     }
 
-    attributeChangedCallback(attrName, oldVal, newVal) {
+    attributeChangedCallback(
+        attrName: string,
+        oldVal: string,
+        newVal: string
+    ) {
         if (newVal != null) {
             if (attrName == "ontap") this.ontap = () => eval(newVal);
+            if (attrName == "ondoubletap") this.ondoubletap = () => eval(newVal);
         }
     }
 }

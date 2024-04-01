@@ -6,11 +6,13 @@ export declare class TouchRippleElement extends HTMLElement {
     activeEffect: TouchRippleEffect;
     private _ontap;
     set ontap(callback: Function);
+    private _ondoubletap;
+    set ondoubletap(callback: Function);
     get child(): HTMLElement;
     getPropertyByName(name: string, scope?: this): string;
     initBuiler(): void;
     connectedCallback(): void;
     showEffect(position: PointerPosition, callback: Function, isRejectable: boolean): void;
     static get observedAttributes(): string[];
-    attributeChangedCallback(attrName: any, oldVal: any, newVal: any): void;
+    attributeChangedCallback(attrName: string, oldVal: string, newVal: string): void;
 }

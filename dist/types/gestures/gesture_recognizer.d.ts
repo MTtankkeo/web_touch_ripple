@@ -5,9 +5,12 @@ export declare enum GestureRecognizerResult {
 }
 export declare abstract class GestureRecognizer {
     listeners: GestureRecognizerListener[];
+    isHold: boolean;
     abstract handlePointer(event: PointerEvent, type: PointerType): void;
     accept(): void;
     reject(): void;
+    hold(): void;
+    release(): void;
     onAccept(): void;
     onReject(): void;
     dispose(): void;
