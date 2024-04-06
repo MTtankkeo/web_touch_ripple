@@ -122,8 +122,8 @@ export class TouchRippleElement extends HTMLElement {
         newVal: string
     ) {
         if (newVal != null) {
-            if (attrName == "ontap") this.ontap = () => eval(newVal);
-            if (attrName == "ondoubletap") this.ondoubletap = () => eval(newVal);
+            if (attrName == "ontap") this.ontap = new Function(newVal);
+            if (attrName == "ondoubletap") this.ondoubletap = new Function(newVal);
         }
     }
 }

@@ -40,7 +40,8 @@ export class TouchRippleGestureRecogzier extends GestureRecognizer {
     /** A current or last handled pointer position by `handlePointer()` */
     position: PointerPosition;
 
-    createPosition(event: PointerEvent) {
+    /** Returns the pointer-position object by the given pointer-event. */
+    createPosition(event: PointerEvent): PointerPosition {
         return { x: event.clientX, y: event.clientY };
     }
 

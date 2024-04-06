@@ -38,7 +38,7 @@ export class GestureArena {
         target.accept(), this.acceptBy(target);
     }
 
-    /** Resets builders and recognizers in arena. */
+    /** Resets builders and recognizers in this arena. */
     reset() {
         this.builders = [];
         this.recognizers = [];
@@ -61,7 +61,7 @@ export class GestureArena {
         // When possible, creates a recognizers by builder.
         if (this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
-        }
+        } else
 
         // Accept a last recognizer that is survivor.
         if (this.recognizers.length == 1) {

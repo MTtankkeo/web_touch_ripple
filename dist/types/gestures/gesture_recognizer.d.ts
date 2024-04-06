@@ -19,10 +19,7 @@ export declare abstract class GestureRecognizer {
 export declare class TouchRippleGestureRecogzier extends GestureRecognizer {
     constructor();
     position: PointerPosition;
-    createPosition(event: PointerEvent): {
-        x: number;
-        y: number;
-    };
+    createPosition(event: PointerEvent): PointerPosition;
     handlePointer(event: PointerEvent, type: PointerType): void;
     pointerDown(position: PointerPosition): void;
     pointerMove(position: PointerPosition): void;
