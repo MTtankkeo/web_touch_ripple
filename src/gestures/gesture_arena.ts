@@ -2,7 +2,7 @@ import { GestureRecognizer, GestureRecognizerResult } from "./gesture_recognizer
 import { GestureRecognizerBuilder, PointerType } from "../type.js";
 
 export type GestureArenaOption = {
-    // Whether to defer the gesture-recognizer about define accept or reject
+    // Whether to defer the gesture-recognizer about define to accept or reject
     // until a pointer-up event occurs.
     isKeepAlivePointerUp: boolean,
 }
