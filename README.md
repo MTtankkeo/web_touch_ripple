@@ -35,11 +35,17 @@ This is the most ideal and widely used solution.
     const ripple = document.getElementById("ripple");
 
     // Called when a user taps or clicks.
-    ripple.ontap = () => console.log("hello world!");
+    ripple.ontap = () => console.log("tap!");
+
+    // Called when a user double taps or clicks.
+    ripple.ondoubletap = () => console.log("double tap!");
+
+    // Called when a user long press or long clicks or long pointer-down.
+    ripple.onlongtap = () => console.log("long tap!");
 </script>
 ```
 
-### How to wait callback until a ripple effect are spread all?
+### How to wait callback until ripple effects are spread all?
 This is can implement by adding a attribute `wait` to a touch-ripple element.
 
 ```html
@@ -99,6 +105,11 @@ this.arena.registerBuilder(() =>
 
 ### How to make gesture recognizer?
 Please refer to the following codes for details!
+
+```ts
+// in `gesture_recognizer.ts`
+export class TouchRippleGestureRecogzier extends GestureRecognizer { ... }
+```
 
 ```ts
 // e.g.

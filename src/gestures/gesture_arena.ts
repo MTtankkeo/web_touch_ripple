@@ -1,8 +1,23 @@
 import { GestureRecognizer, GestureRecognizerResult } from "./gesture_recognizer.js";
 import { GestureRecognizerBuilder, PointerType } from "../type.js";
 
+export type GestureArenaOption = {
+    // Whether to defer the gesture-recognizer about define accept or reject
+    // until a pointer-up event occurs.
+    isKeepAlivePointerUp: boolean,
+}
+
 /** This arena is based on the cycle. */
 export class GestureArena {
+    constructor(
+        public option: GestureArenaOption
+    ) {
+        this.option = {
+            ...{ isKeepAlivePointerUp: true }, // default
+            ...this.option
+        };
+    }
+
     /** Just a items of factory functions for gesture-recognizer. */
     builders: GestureRecognizerBuilder[] = [];
 
@@ -28,7 +43,7 @@ export class GestureArena {
         this.checkCycle();
     }
 
-    /** Rejects all a recognizers except a given recognizer. */
+    /** Accepts all a recognizers except a given recognizer. */
     acceptBy(target: GestureRecognizer) {
         this.recognizers.forEach(r => r != target ? r.reject() : undefined);
         this.recognizers = [];
