@@ -104,7 +104,9 @@ Please refer to the following codes for details!
 // e.g.
 export class TestGestureRecognizer extends TouchRippleGestureRecogzier {
     constructor(
-        public event: GestureEventCallback,
+        public callback1: GestureEventCallback,
+        public callback2: GestureEventCallback,
+        public callback3: GestureEventCallback,
     ) {
         super();
     }
