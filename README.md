@@ -9,7 +9,7 @@ This is just a preview of a simple example of that package.
 ![ezgif-2-d586f8046c](https://github.com/MTtankkeo/web_touch_ripple/assets/122026021/eb0c866c-fb18-4f2c-8f08-c706214e01f9)
 
 ## How to apply ripple element
-Please referance to a codes below!
+Please refer to the following codes for details!
 
 ### Staticly
 This is a solution of converting a string into a function and using it.
@@ -81,3 +81,48 @@ export function TouchRipple({onTap, wait, children}: {
 | --ripple-blur-radius | The blur effect radius of touch ripple. | 10px
 | --ripple-lower-scale | The ripple scale of start point. | 0.3
 | --ripple-upper-scale | The ripple scale of end point. | 1
+
+## How to customize gestures?
+Use the `Gesture Arena` and `Gesture Recognizer` provide on this package.
+
+```js
+// for gestures competition for accept on the place.
+this.arena = new GestureArena();
+```
+
+```js
+// for factory function registering about the gesture-recognizer.
+this.arena.registerBuilder(() =>
+    new TapGestureRecognizer(...args)
+);
+```
+
+### How to make gesture recognizer?
+Please refer to the following codes for details!
+
+```ts
+// for example.
+export class TestGestureRecognizer extends TouchRippleGestureRecogzier {
+    constructor(
+        public onTap: GestureEventCallback,
+        public onTapRejectable: GestureEventCallback,
+        public onTapAccept: GestureEventCallback,
+        public onTapReject: GestureEventCallback,
+        public previewDuration: number,
+    ) {
+        super();
+    }
+
+    pointerDown(position: PointerPosition): void { ... }
+    pointerMove(positoin: PointerPosition): void { ... }
+    pointerUp(positoin: PointerPosition): void { ... }
+    pointerCancel(positoin: PointerPosition): void { ... }
+
+    dispose(): void {
+        // Defines all values defined for judgment as null.
+    }
+
+    onAccept(): void { ... }
+    onReject(): void { ... }
+}
+```
