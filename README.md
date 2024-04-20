@@ -101,14 +101,10 @@ this.arena.registerBuilder(() =>
 Please refer to the following codes for details!
 
 ```ts
-// for example.
+// e.g.
 export class TestGestureRecognizer extends TouchRippleGestureRecogzier {
     constructor(
-        public onTap: GestureEventCallback,
-        public onTapRejectable: GestureEventCallback,
-        public onTapAccept: GestureEventCallback,
-        public onTapReject: GestureEventCallback,
-        public previewDuration: number,
+        public event: GestureEventCallback,
     ) {
         super();
     }
