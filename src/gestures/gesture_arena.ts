@@ -10,7 +10,7 @@ export type GestureArenaOption = {
 /** This arena is based on the cycle. */
 export class GestureArena {
     constructor(
-        public option: GestureArenaOption
+        public option?: GestureArenaOption
     ) {
         this.option = {
             ...{ isKeepAlivePointerUp: true }, // default

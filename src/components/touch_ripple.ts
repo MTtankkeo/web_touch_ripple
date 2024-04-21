@@ -5,7 +5,7 @@ import { TapGestureRecognizer } from "../gestures/tap";
 import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
 
 export class TouchRippleElement extends HTMLElement {
-    arena: GestureArena = new GestureArena();
+    arena: GestureArena = new GestureArena({isKeepAlivePointerUp: true});
 
     /** Is defined for update the status of added a touch effect. */
     activeEffect: TouchRippleEffect;
@@ -36,18 +36,30 @@ export class TouchRippleElement extends HTMLElement {
         return getComputedStyle(scope).getPropertyValue(name);
     }
 
+    getDurationByName(name: string, scope = this) {
+        const value = this.getPropertyByName(name, scope);
+
+        return value == "" || value == "none" ? null : value.endsWith("ms")
+            ? Number(value.replace("ms", ""))
+            : Number(value.replace("s", "")) * 1000;
+    }
+
     /** Initializes gesture-recognizer builders for arena. */
     initBuiler() {
         this.arena.reset();
-        
+
         if (this._ontap != null) {
-            this.arena.registerBuilder(() => 
+            const previewDuration  = this.getDurationByName("--tap-preview-duration") ?? 150;
+            const tappableDuration = this.getDurationByName("--tappable-duration") ?? 0;
+
+            this.arena.registerBuilder(() =>
                 new TapGestureRecognizer(
                     (p) => this.showEffect(p, this._ontap, false),
                     (p) => this.showEffect(p, this._ontap, true),
                     () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
                     () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
-                    150
+                    previewDuration,  // ms
+                    tappableDuration, // ms
                 )
             );
         }

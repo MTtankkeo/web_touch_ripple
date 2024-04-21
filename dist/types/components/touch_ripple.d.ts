@@ -10,6 +10,7 @@ export declare class TouchRippleElement extends HTMLElement {
     set ondoubletap(callback: Function);
     get child(): HTMLElement;
     getPropertyByName(name: string, scope?: this): string;
+    getDurationByName(name: string, scope?: this): number;
     initBuiler(): void;
     connectedCallback(): void;
     showEffect(position: PointerPosition, callback: Function, isRejectable: boolean): void;

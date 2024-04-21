@@ -4,8 +4,8 @@ export type GestureArenaOption = {
     isKeepAlivePointerUp: boolean;
 };
 export declare class GestureArena {
-    option: GestureArenaOption;
-    constructor(option: GestureArenaOption);
+    option?: GestureArenaOption;
+    constructor(option?: GestureArenaOption);
     builders: GestureRecognizerBuilder[];
     private recognizers;
     registerBuilder(builder: GestureRecognizerBuilder): void;

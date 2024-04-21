@@ -2,7 +2,7 @@ import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
-    timerId: NodeJS.Timeout;
+    timerIds: NodeJS.Timeout[] = [];
 
     /** Whether the gesture can be rejected in the middle. */
     isRejectable: boolean = false;
@@ -12,7 +12,8 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
         public onTapRejectable: GestureEventCallback,
         public onTapAccept: GestureEventCallback,
         public onTapReject: GestureEventCallback,
-        public previewDuration: number,
+        public rejectableDuration: number, // tap preview duration
+        public tappableDuration: number,
     ) {
         super();
     }
@@ -23,11 +24,17 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
             this.onTapRejectable(position);
         }
 
-        this.timerId = setTimeout(_handleRejectalbe, this.previewDuration);
+        // for --tap-preview-duration
+        this.timerIds.push(setTimeout(_handleRejectalbe, this.rejectableDuration));
+
+        // for --tappable-duration
+        if (this.tappableDuration != 0) {
+            this.timerIds.push(setTimeout(this.reject.bind(this), this.tappableDuration));
+        }
     }
 
     dispose(): void {
-        clearTimeout(this.timerId);
+        this.timerIds.forEach(id => clearTimeout(id));
     }
 
     onAccept(): void {

@@ -6,10 +6,11 @@ export declare class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     onTapRejectable: GestureEventCallback;
     onTapAccept: GestureEventCallback;
     onTapReject: GestureEventCallback;
-    previewDuration: number;
-    timerId: NodeJS.Timeout;
+    rejectableDuration: number;
+    tappableDuration: number;
+    timerIds: NodeJS.Timeout[];
     isRejectable: boolean;
-    constructor(onTap: GestureEventCallback, onTapRejectable: GestureEventCallback, onTapAccept: GestureEventCallback, onTapReject: GestureEventCallback, previewDuration: number);
+    constructor(onTap: GestureEventCallback, onTapRejectable: GestureEventCallback, onTapAccept: GestureEventCallback, onTapReject: GestureEventCallback, rejectableDuration: number, tappableDuration: number);
     pointerDown(position: PointerPosition): void;
     dispose(): void;
     onAccept(): void;
