@@ -24,10 +24,10 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
             this.onTapRejectable(position);
         }
 
-        // for --tap-preview-duration
+        // about --tap-preview-duration
         this.timerIds.push(setTimeout(_handleRejectalbe, this.rejectableDuration));
 
-        // for --tappable-duration
+        // about --tappable-duration
         if (this.tappableDuration != 0) {
             this.timerIds.push(setTimeout(this.reject.bind(this), this.tappableDuration));
         }
