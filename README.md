@@ -87,6 +87,8 @@ export function TouchRipple({onTap, wait, children}: {
 | --ripple-blur-radius | The blur effect radius of touch ripple. | 10px
 | --ripple-lower-scale | The ripple scale of start point. | 0.3
 | --ripple-upper-scale | The ripple scale of end point. | 1
+| --tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
+| --double-tappable-duration | This duration required to define if it is a double tap. | none
 
 ## How to customize gestures?
 Use the `Gesture Arena` and `Gesture Recognizer` provide on this package.
