@@ -89,6 +89,7 @@ export function TouchRipple({onTap, wait, children}: {
 | --ripple-upper-scale | The ripple scale of end point. | 1
 | --tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
+| --long-tappable-duration | This duration required to define if it is a long tap. | 1s
 
 ## How to customize gestures?
 Use the `Gesture Arena` and `Gesture Recognizer` provide on this package.
