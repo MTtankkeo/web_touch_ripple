@@ -40,7 +40,7 @@ export class TouchRippleEffect {
         parent: HTMLElement,
         target: HTMLElement,
     ) {
-        target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.3s)";
+        target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.4s)";
         target.style.animationTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
         target.onanimationend = () => parent.removeChild(target);
     }
