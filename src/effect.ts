@@ -41,6 +41,7 @@ export class TouchRippleEffect {
         target: HTMLElement,
     ) {
         target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.3s)";
+        target.style.animationTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
         target.onanimationend = () => parent.removeChild(target);
     }
 
@@ -60,7 +61,7 @@ export class TouchRippleEffect {
 
         // Initializes setting values.
         {
-            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "10px";
+            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "15px";
             var blurRadiusValue = Number(blurRadius.replace("px", ""));
 
             parent.getAttribute("attribute");
@@ -81,7 +82,8 @@ export class TouchRippleEffect {
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
         ripple.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
-        ripple.style.animation = "ripple-fadein var(--ripple-fadein-duration, 0.2s)";
+        ripple.style.animation = "ripple-fadein var(--ripple-fadein-duration, 0.25s)";
+        ripple.style.animationTimingFunction = "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))";
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
