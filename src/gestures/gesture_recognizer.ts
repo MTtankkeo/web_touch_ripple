@@ -10,7 +10,7 @@ export abstract class GestureRecognizer {
     /** A listeners that is called when accpeted or rejected. */
     listeners: GestureRecognizerListener[] = [];
 
-    /** Whether can be accept naturally(case of being last alone and accepted) */
+    /** Whether can be accepted naturally(case of being last alone and accepted) */
     isHold: boolean = false;
 
     abstract handlePointer(

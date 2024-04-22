@@ -72,9 +72,9 @@ export class GestureArena {
         return recognizer;
     }
 
-    private checkCycle() {
-        // When possible, creates a recognizers by builder.
-        if (this.recognizers.length == 0) {
+    private checkCycle(type?: PointerType) {
+        // When possible and if pointer-down event, creates a recognizers by builder.
+        if (type == PointerType.DOWN && this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
         } else
 
@@ -88,7 +88,7 @@ export class GestureArena {
 
     handlePointer(event: PointerEvent, type: PointerType) {
         if (type == PointerType.DOWN) {
-            this.checkCycle();
+            this.checkCycle(type);
         }
 
         // When the pointer are received all, accepts the last survivor.

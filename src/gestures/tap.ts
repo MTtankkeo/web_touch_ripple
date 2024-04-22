@@ -1,4 +1,4 @@
-import { GestureEventCallback, PointerPosition } from "../type";
+import { GestureEventCallback, PointerPosition, PointerType } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
@@ -38,6 +38,7 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     }
 
     onAccept(): void {
+        console.log("is accpeted");
         if (this.isRejectable) {
             this.onTapAccept(this.position);
         } else {
@@ -46,6 +47,7 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     }
 
     onReject(): void {
+        console.log("is rejected");
         if (this.isRejectable) this.onTapReject(this.position);
     }
 }
