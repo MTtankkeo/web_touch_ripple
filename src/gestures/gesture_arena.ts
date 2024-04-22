@@ -72,8 +72,13 @@ export class GestureArena {
         return recognizer;
     }
 
+    /**
+     * Called when a recognizer is attached or detached or when
+     * the others related state changes.
+     */
     private checkCycle(type?: PointerType) {
-        // When possible and if pointer-down event, creates a recognizers by builder.
+
+        // When possible and if pointer-down event, creates recognizers by builder.
         if (type == PointerType.DOWN && this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
         } else
