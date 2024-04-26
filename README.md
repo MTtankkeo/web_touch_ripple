@@ -93,7 +93,7 @@ export function TouchRipple({onTap, wait, children}: {
 | --tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
 | --long-tappable-duration | This duration required to define if it is a long tap. | 1s
-| --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. | overlappable
+| --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, none) | overlappable
 
 ## How to customize gestures?
 Use the `Gesture Arena` and `Gesture Recognizer` provide on this package.
