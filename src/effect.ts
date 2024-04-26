@@ -6,11 +6,13 @@ export enum TouchRippleEffectStatus {
     NONE,
     ACCEPTED,
     REJECTED,
+    DISPOSED
 }
 
 export class TouchRippleEffect {
     private _status: TouchRippleEffectStatus;
     private _statusListeners: TouchRippleEffectStatusListener[] = [];
+    private _ripple: HTMLElement;
 
     constructor(
         public position: PointerPosition,
@@ -36,17 +38,28 @@ export class TouchRippleEffect {
         this._statusListeners.push(callback);
     }
 
+    notify() {
+        if (this.callback) this.callback();
+    }
+
     fadeout(
         parent: HTMLElement,
-        target: HTMLElement,
+        target: HTMLElement = this._ripple
     ) {
         target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.4s)";
         target.style.animationTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
         target.onanimationend = () => parent.removeChild(target);
+        this.status = TouchRippleEffectStatus.DISPOSED;
     }
 
-    notify() {
-        if (this.callback) this.callback();
+    cancel(
+        parent: HTMLElement,
+        target: HTMLElement = this._ripple
+    ) {
+        target.style.animation = "ripple-fadeout var(--ripple-cancel-duration, 0s)";
+        target.style.animationTimingFunction = "var(--ripple-cancel-curve)";
+        target.onanimationend = () => parent.removeChild(target);
+        this.status = TouchRippleEffectStatus.DISPOSED;
     }
     
     createElement(
@@ -71,7 +84,8 @@ export class TouchRippleEffect {
            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
            rippleSize += blurRadiusValue * 2;
 
-        const ripple = document.createElement("div");
+        this._ripple = document.createElement("div");
+        const ripple = this._ripple;
         ripple.classList.add("ripple");
         ripple.style.position = "absolute";
         ripple.style.left = `${targetX}px`;
@@ -102,11 +116,11 @@ export class TouchRippleEffect {
                     if (status == TouchRippleEffectStatus.ACCEPTED) {
                         if(this.isWait) this.notify();
                     }
-                    this.fadeout(target, ripple);
+                    this.fadeout(target);
                 }
             } else {
                 if (this.isWait) this.notify();
-                this.fadeout(target, ripple);
+                this.fadeout(target);
             }
         };
 

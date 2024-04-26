@@ -113,12 +113,22 @@ export class TouchRippleElement extends HTMLElement {
         callback: Function,
         isRejectable: boolean,
     ) {
+        const overlapBehavior = this.getPropertyByName("--ripple-overlap-behavior") ?? "overlappable";
+        if (overlapBehavior == "\"cancel\"") {
+            this.activeEffect?.cancel(this.child);
+        } else if (overlapBehavior == "\"ignoring\"" && this.activeEffect != null) {
+            return;
+        }
+
         this.activeEffect = new TouchRippleEffect(
             position,
             callback,
             isRejectable,
             this.hasAttribute("wait")
         );
+        this.activeEffect.statusListener = status => {
+            if (status == TouchRippleEffectStatus.DISPOSED) this.activeEffect = null;
+        }
         
         this.child.appendChild(this.activeEffect.createElement(this, this.child));
     }

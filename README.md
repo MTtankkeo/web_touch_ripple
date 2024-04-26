@@ -86,6 +86,8 @@ export function TouchRipple({onTap, wait, children}: {
 | --ripple-fadein-curve | This is curve about fade-in and spread animation of ripples. | cubic-bezier(.2,.3,.4,1)
 | --ripple-fadeout-duration | Duration until the ripple effect disappears. | 0.4s
 | --ripple-fadeout-curve | This is curve about fade-out animation of ripples. | default of browser
+| --ripple-cancel-duration | This is curve about fade-out animation of ripples when cancels. | 0s
+| --ripple-cancel-curve | This is curve about fade-out animation of ripples when cancels. | default of browser
 | --ripple-blur-radius | The blur effect radius of touch ripple. | 15px
 | --ripple-lower-scale | The ripple scale of start point. | 0.3
 | --ripple-upper-scale | The ripple scale of end point. | 1
@@ -93,7 +95,7 @@ export function TouchRipple({onTap, wait, children}: {
 | --tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
 | --long-tappable-duration | This duration required to define if it is a long tap. | 1s
-| --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, none) | overlappable
+| --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, ignoring) | overlappable
 
 ## How to customize gestures?
 Use the `Gesture Arena` and `Gesture Recognizer` provide on this package.
