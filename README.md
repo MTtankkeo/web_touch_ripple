@@ -19,6 +19,7 @@ This is a solution of converting a string into a function and using it.
 ```html
 <!-- Called when a user taps or clicks. -->
 <touch-ripple ontap="console.log('hello world!')">
+    <!-- child of the touch-ripple element must be one. -->
     <h1 style="padding: 15px;">
         Tappabe
     </h1>
