@@ -49,7 +49,7 @@ export class TouchRippleEffect {
         target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.4s)";
         target.style.animationTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
         target.onanimationend = () => parent.removeChild(target);
-        this.status = TouchRippleEffectStatus.DISPOSED;
+        this.dispose();
     }
 
     cancel(
@@ -59,7 +59,7 @@ export class TouchRippleEffect {
         target.style.animation = "ripple-fadeout var(--ripple-cancel-duration, 0s)";
         target.style.animationTimingFunction = "var(--ripple-cancel-curve)";
         target.onanimationend = () => parent.removeChild(target);
-        this.status = TouchRippleEffectStatus.DISPOSED;
+        this.dispose();
     }
     
     createElement(
@@ -125,5 +125,11 @@ export class TouchRippleEffect {
         };
 
         return ripple;
+    }
+
+    dispose() {
+        this.status = TouchRippleEffectStatus.DISPOSED;
+        this._statusListeners = null;
+        this._ripple = null;
     }
 }

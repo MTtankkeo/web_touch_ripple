@@ -22,4 +22,5 @@ export declare class TouchRippleEffect {
     fadeout(parent: HTMLElement, target?: HTMLElement): void;
     cancel(parent: HTMLElement, target?: HTMLElement): void;
     createElement(parent: TouchRippleElement, target: HTMLElement): HTMLElement;
+    dispose(): void;
 }

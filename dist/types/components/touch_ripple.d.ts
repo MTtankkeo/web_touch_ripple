@@ -3,7 +3,7 @@ import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition } from "../type";
 export declare class TouchRippleElement extends HTMLElement {
     arena: GestureArena;
-    activeEffect: TouchRippleEffect;
+    activeEffect?: TouchRippleEffect;
     private _ontap;
     set ontap(callback: Function);
     private _ondoubletap;

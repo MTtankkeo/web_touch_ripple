@@ -8,7 +8,7 @@ export class TouchRippleElement extends HTMLElement {
     arena: GestureArena = new GestureArena({isKeepAlivePointerUp: true});
 
     /** Is defined for update the status of added a touch effect. */
-    activeEffect: TouchRippleEffect;
+    activeEffect?: TouchRippleEffect;
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
@@ -126,9 +126,11 @@ export class TouchRippleElement extends HTMLElement {
             isRejectable,
             this.hasAttribute("wait")
         );
+        /*
         this.activeEffect.statusListener = status => {
             if (status == TouchRippleEffectStatus.DISPOSED) this.activeEffect = null;
         }
+        */
         
         this.child.appendChild(this.activeEffect.createElement(this, this.child));
     }
