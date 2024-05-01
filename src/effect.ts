@@ -18,6 +18,7 @@ export class TouchRippleEffect {
         public position: PointerPosition,
         public callback: Function,
         public isRejectable: boolean,
+        /** Whether to hold event calls until effects are spread all. */
         public isWait: boolean
     ) {
         isRejectable
@@ -76,8 +77,6 @@ export class TouchRippleEffect {
         {
             var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "15px";
             var blurRadiusValue = Number(blurRadius.replace("px", ""));
-
-            parent.getAttribute("attribute");
         }
 
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
@@ -101,6 +100,8 @@ export class TouchRippleEffect {
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
+        // When don't need to hold the event call,
+        // process it according to the current touch ripple status.
         if (!this.isWait) {
             if (this.status == TouchRippleEffectStatus.ACCEPTED) this.notify();
             if (this.status == TouchRippleEffectStatus.NONE) {
@@ -110,6 +111,7 @@ export class TouchRippleEffect {
             }
         }
 
+        // To understand this codes, need to refer to comment of variable [isWait].
         ripple.onanimationend = () => {
             if (this.isRejectable && this.status == TouchRippleEffectStatus.NONE) {
                 this.statusListener = (status) => {
