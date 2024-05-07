@@ -1,5 +1,5 @@
 # Touch Ripple For Web
-Use web components to implement efficient and simple touch ripple effects.
+Use web components to implement efficient and simple and flexible touch ripple effects.
 
 ## Preview
 This is just a preview of a simple example of that package.
