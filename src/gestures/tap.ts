@@ -38,7 +38,6 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     }
 
     onAccept(): void {
-        console.log("is accpeted");
         if (this.isRejectable) {
             this.onTapAccept(this.position);
         } else {
@@ -47,7 +46,6 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     }
 
     onReject(): void {
-        console.log("is rejected");
         if (this.isRejectable) this.onTapReject(this.position);
     }
 }
