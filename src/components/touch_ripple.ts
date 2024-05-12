@@ -3,6 +3,7 @@ import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition, PointerType } from "../type";
 import { TapGestureRecognizer } from "../gestures/tap";
 import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
+import { LongTapGestureRecognizer } from "../gestures/long_tap";
 
 export class TouchRippleElement extends HTMLElement {
     arena: GestureArena = new GestureArena({isKeepAlivePointerUp: true});
@@ -28,6 +29,18 @@ export class TouchRippleElement extends HTMLElement {
         this.initBuiler();
     }
 
+    /* Called when a user long press or long clicks or long pointer-down. */
+    private _onlongtap: Function;
+
+    /** 
+     * Sets a callback function that is called when a user long press or long clicks
+     * or long pointer-down.
+     */
+    set onlongtap(callback: Function) {
+        this._onlongtap = callback;
+        this.initBuiler();
+    }
+
     get child(): HTMLElement {
         return this.firstElementChild as HTMLElement;
     }
@@ -48,8 +61,9 @@ export class TouchRippleElement extends HTMLElement {
     initBuiler() {
         this.arena.reset();
 
+        const previewDuration = this.getDurationByName("--tap-preview-duration") ?? 150;
+
         if (this._ontap != null) {
-            const previewDuration  = this.getDurationByName("--tap-preview-duration") ?? 150;
             const tappableDuration = this.getDurationByName("--tappable-duration") ?? 0;
 
             this.arena.registerBuilder(() =>
@@ -66,7 +80,21 @@ export class TouchRippleElement extends HTMLElement {
 
         if (this._ondoubletap != null) {
             this.arena.registerBuilder(() =>
-                new DoubleTapGestureRecognizer((p) => this.showEffect(p, this._ondoubletap, false))
+                new DoubleTapGestureRecognizer(p => this.showEffect(p, this._ondoubletap, false))
+            );
+        }
+
+        if (this._onlongtap != null) {
+            const longtappableDuration = this.getDurationByName("--longtappable-duration") ?? 1000;
+
+            this.arena.registerBuilder(() =>
+                new LongTapGestureRecognizer(
+                    p => console.log("start"),
+                    () => console.log("end"),
+                    () => console.log("long-tap"),
+                    previewDuration,
+                    longtappableDuration,
+                )
             );
         }
     }

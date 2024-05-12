@@ -8,6 +8,8 @@ export declare class TouchRippleElement extends HTMLElement {
     set ontap(callback: Function);
     private _ondoubletap;
     set ondoubletap(callback: Function);
+    private _onlongtap;
+    set onlongtap(callback: Function);
     get child(): HTMLElement;
     getPropertyByName(name: string, scope?: this): string;
     getDurationByName(name: string, scope?: this): number;

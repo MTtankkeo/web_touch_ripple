@@ -1,4 +1,4 @@
-import { GestureEventCallback, PointerPosition, PointerType } from "../type";
+import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
