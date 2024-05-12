@@ -9,6 +9,11 @@ export enum TouchRippleEffectStatus {
     DISPOSED
 }
 
+export type TouchRippleEffectOption = {
+    fadeInDuration: string,
+    fadeInCurve: string,
+}
+
 export class TouchRippleEffect {
     private _status: TouchRippleEffectStatus;
     private _statusListeners: TouchRippleEffectStatusListener[] = [];
@@ -19,7 +24,8 @@ export class TouchRippleEffect {
         public callback: Function,
         public isRejectable: boolean,
         /** Whether to hold event calls until effects are spread all. */
-        public isWait: boolean
+        public isWait: boolean,
+        public option: TouchRippleEffectOption
     ) {
         isRejectable
             ? this._status = TouchRippleEffectStatus.NONE
@@ -65,7 +71,7 @@ export class TouchRippleEffect {
     
     createElement(
         parent: TouchRippleElement,
-        target: HTMLElement
+        target: HTMLElement,
     ) {
         const targetRact = parent.getBoundingClientRect();
         const targetX = this.position.x - targetRact.left;
@@ -83,7 +89,9 @@ export class TouchRippleEffect {
            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
            rippleSize += blurRadiusValue * 2;
 
-        this._ripple = document.createElement("div");
+        console.log(this.option?.fadeInDuration ?? "sdfdsf");
+
+        this._ripple = document.createElement("abcd");
         const ripple = this._ripple;
         ripple.classList.add("ripple");
         ripple.style.position = "absolute";
@@ -95,8 +103,8 @@ export class TouchRippleEffect {
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
         ripple.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
-        ripple.style.animation = "ripple-fadein var(--ripple-fadein-duration, 0.25s)";
-        ripple.style.animationTimingFunction = "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))";
+        ripple.style.animation = `ripple-fadein ${this.option.fadeInDuration}`;
+        ripple.style.animationTimingFunction = this.option.fadeInCurve;
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 

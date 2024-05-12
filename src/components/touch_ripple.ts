@@ -1,4 +1,4 @@
-import { TouchRippleEffect, TouchRippleEffectStatus } from "../effect";
+import { TouchRippleEffect, TouchRippleEffectOption, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition, PointerType } from "../type";
 import { TapGestureRecognizer } from "../gestures/tap";
@@ -89,9 +89,17 @@ export class TouchRippleElement extends HTMLElement {
 
             this.arena.registerBuilder(() =>
                 new LongTapGestureRecognizer(
-                    p => console.log("start"),
-                    () => console.log("end"),
-                    () => console.log("long-tap"),
+                    p => this.showEffect(
+                        p,
+                        this._onlongtap,
+                        true,
+                        { // default or user option.
+                            fadeInDuration: "var(--long-tappable-duration, 1s)",
+                            fadeInCurve: "var(--long-tappable-curve, linear(0, 1))"
+                        }
+                    ),
+                    () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
+                    () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
                     previewDuration,
                     longtappableDuration,
                 )
@@ -140,6 +148,10 @@ export class TouchRippleElement extends HTMLElement {
         position: PointerPosition,
         callback: Function,
         isRejectable: boolean,
+        option: TouchRippleEffectOption = {
+            fadeInDuration: "var(--ripple-fadein-duration, 0.25s)",
+            fadeInCurve: "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))"
+        },
     ) {
         const overlapBehavior = this.getPropertyByName("--ripple-overlap-behavior") ?? "overlappable";
         if (overlapBehavior == "\"cancel\"") {
@@ -152,13 +164,9 @@ export class TouchRippleElement extends HTMLElement {
             position,
             callback,
             isRejectable,
-            this.hasAttribute("wait")
+            this.hasAttribute("wait"),
+            option,
         );
-        /*
-        this.activeEffect.statusListener = status => {
-            if (status == TouchRippleEffectStatus.DISPOSED) this.activeEffect = null;
-        }
-        */
         
         this.child.appendChild(this.activeEffect.createElement(this, this.child));
     }

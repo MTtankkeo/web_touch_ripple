@@ -21,6 +21,7 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     pointerDown(position: PointerPosition): void {
         const _handleRejectalbe = () => {
             this.isRejectable = true;
+            // this.isHold = true;
             this.onTapRejectable(position);
         }
 

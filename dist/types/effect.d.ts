@@ -6,15 +6,20 @@ export declare enum TouchRippleEffectStatus {
     REJECTED = 2,
     DISPOSED = 3
 }
+export type TouchRippleEffectOption = {
+    fadeInDuration: string;
+    fadeInCurve: string;
+};
 export declare class TouchRippleEffect {
     position: PointerPosition;
     callback: Function;
     isRejectable: boolean;
     isWait: boolean;
+    option: TouchRippleEffectOption;
     private _status;
     private _statusListeners;
     private _ripple;
-    constructor(position: PointerPosition, callback: Function, isRejectable: boolean, isWait: boolean);
+    constructor(position: PointerPosition, callback: Function, isRejectable: boolean, isWait: boolean, option: TouchRippleEffectOption);
     get status(): TouchRippleEffectStatus;
     set status(newValue: TouchRippleEffectStatus);
     set statusListener(callback: TouchRippleEffectStatusListener);
