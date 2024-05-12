@@ -35,6 +35,7 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
 
     dispose(): void {
         this.timerIds.forEach(id => clearTimeout(id));
+        this.timerIds = null;
     }
 
     onAccept(): void {
