@@ -78,6 +78,7 @@ export class TouchRippleEffect {
         const targetY = this.position.y - targetRact.top;
         const centerX = parent.offsetWidth / 2;
         const centerY = parent.offsetHeight / 2;
+        const performFadeout = () => { if (this.isWait) { this.notify() } this.fadeout(target); }
 
         // Initializes setting values.
         {
@@ -106,31 +107,28 @@ export class TouchRippleEffect {
         ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
-        // When don't need to hold the event call,
-        // process it according to the current touch ripple status.
-        if (!this.isWait) {
-            if (this.status == TouchRippleEffectStatus.ACCEPTED) this.notify();
-            if (this.status == TouchRippleEffectStatus.NONE) {
-                this.statusListener = (status) => {
-                    if (status == TouchRippleEffectStatus.ACCEPTED) this.notify();
-                }
-            }
-        }
+        let isFadeInEnd = false;
+        ripple.addEventListener("animationend", () => {
+            isFadeInEnd = true;
+        });
 
-        // To understand this codes, need to refer to comment of variable [isWait].
-        ripple.onanimationend = () => {
-            if (this.isRejectable && this.status == TouchRippleEffectStatus.NONE) {
-                this.statusListener = (status) => {
-                    if (status == TouchRippleEffectStatus.ACCEPTED) {
-                        if(this.isWait) this.notify();
+        if (this.isRejectable) {
+            this.statusListener = status => {
+                if (status == TouchRippleEffectStatus.REJECTED) this.fadeout(target);
+                if (status == TouchRippleEffectStatus.ACCEPTED) {
+                    if (isFadeInEnd) return this.notify(), this.fadeout(target);
+                    if (this.isWait == false) {
+                        this.notify();
                     }
-                    this.fadeout(target);
+                    ripple.onanimationend = performFadeout;
                 }
-            } else {
-                if (this.isWait) this.notify();
-                this.fadeout(target);
             }
-        };
+        } else {
+            if (this.isWait == false) {
+                this.notify();
+            }
+            ripple.onanimationend = performFadeout;
+        }
 
         return ripple;
     }
