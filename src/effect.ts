@@ -89,8 +89,6 @@ export class TouchRippleEffect {
            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
            rippleSize += blurRadiusValue * 2;
 
-        console.log(this.option?.fadeInDuration ?? "sdfdsf");
-
         this._ripple = document.createElement("abcd");
         const ripple = this._ripple;
         ripple.classList.add("ripple");
