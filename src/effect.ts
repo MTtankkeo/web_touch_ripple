@@ -127,6 +127,9 @@ export class TouchRippleEffect {
             if (this.isWait == false) {
                 this.notify();
             }
+
+            // When don't need to hold the event call,
+            // process it according to the current touch ripple status.
             ripple.onanimationend = performFadeout;
         }
 
