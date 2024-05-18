@@ -7,7 +7,10 @@ export type GestureArenaOption = {
     isKeepAliveLastPointerUp: boolean,
 }
 
-/** This arena is based on the cycle. */
+/** 
+ * Gesture Arena is a simple gesture competition system.
+ * See also, this arena is based on the cycle.
+ */
 export class GestureArena {
     constructor(
         public option?: GestureArenaOption
