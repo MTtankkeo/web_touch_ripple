@@ -15,4 +15,5 @@ export declare class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     dispose(): void;
     onAccept(): void;
     onReject(): void;
+    toString(): string;
 }

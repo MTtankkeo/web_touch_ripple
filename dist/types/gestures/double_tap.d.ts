@@ -9,4 +9,5 @@ export declare class DoubleTapGestureRecognizer extends TouchRippleGestureRecogz
     pointerDown(position: PointerPosition): void;
     onAccept(): void;
     dispose(): void;
+    toString(): string;
 }

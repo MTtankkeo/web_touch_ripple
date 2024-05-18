@@ -49,4 +49,8 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     onReject(): void {
         if (this.isRejectable) this.onTapReject(this.position);
     }
+
+    toString(): string {
+        return "[Object TapGestureRecognizer]";
+    }
 }

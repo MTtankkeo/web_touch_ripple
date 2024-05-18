@@ -14,4 +14,5 @@ export declare class LongTapGestureRecognizer extends TouchRippleGestureRecogzie
     pointerUp(position: PointerPosition): void;
     onReject(): void;
     dispose(): void;
+    toString(): string;
 }

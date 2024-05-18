@@ -27,4 +27,8 @@ export class DoubleTapGestureRecognizer extends TouchRippleGestureRecogzier {
     dispose(): void {
         if (this.timeId != null) clearTimeout(this.timeId);
     }
+
+    toString(): string {
+        return "[Object DoubleTapGestureRecognizer]";
+    }
 }

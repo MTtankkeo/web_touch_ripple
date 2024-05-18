@@ -2,8 +2,8 @@ import { GestureRecognizer, GestureRecognizerResult } from "./gesture_recognizer
 import { GestureRecognizerBuilder, PointerType } from "../type.js";
 
 export type GestureArenaOption = {
-    // Whether to defer the gesture-recognizer about define to accept or reject
-    // until a pointer-up event occurs.
+    // Whether to defer the gesture recognizer about to define accepting
+    // or rejecting until a pointer event ends.
     isKeepAliveLastPointerUp: boolean,
 }
 
@@ -77,10 +77,12 @@ export class GestureArena {
      * the others related state changes.
      */
     private checkCycle(type?: PointerType) {
-        const keepAliveLastToPointerUp = this.option.isKeepAliveLastPointerUp;
+        const isKeepAliveLastPointerUp = this.option.isKeepAliveLastPointerUp;
+
+        console.log(this.recognizers.length == 1);
 
         // Accept a last un-holded recognizer that is survivor.
-        if (keepAliveLastToPointerUp && type == PointerType.UP && this.recognizers.length == 1) {
+        if (isKeepAliveLastPointerUp && type == PointerType.UP || type == null && this.recognizers.length == 1) {
             const last = this.recognizers[0];
 
             if(last.isHold == false) this.acceptWith(last);
@@ -88,13 +90,12 @@ export class GestureArena {
     }
 
     handlePointer(event: PointerEvent, type: PointerType) {
-
         // When possible and if pointer-down event, creates recognizers by builder.
         if (type == PointerType.DOWN && this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
         }
 
-        this.checkCycle(type);
         this.recognizers.forEach(r => r.handlePointer(event, type));
+        this.checkCycle(type);
     }
 }

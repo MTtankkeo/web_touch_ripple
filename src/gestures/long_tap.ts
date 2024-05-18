@@ -38,4 +38,8 @@ export class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
     dispose(): void {
         if (this.timerId != null) clearTimeout(this.timerId);
     }
+
+    toString(): string {
+        return "[Object LongTapGestureRecognizer]";
+    }
 }
