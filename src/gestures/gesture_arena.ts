@@ -4,7 +4,7 @@ import { GestureRecognizerBuilder, PointerType } from "../type.js";
 export type GestureArenaOption = {
     // Whether to defer the gesture-recognizer about define to accept or reject
     // until a pointer-up event occurs.
-    isKeepAlivePointerUp: boolean,
+    isKeepAliveLastPointerUp: boolean,
 }
 
 /** This arena is based on the cycle. */
@@ -13,7 +13,7 @@ export class GestureArena {
         public option?: GestureArenaOption
     ) {
         this.option = {
-            ...{ isKeepAlivePointerUp: true }, // default
+            ...{ isKeepAliveLastPointerUp: true }, // default
             ...this.option
         };
     }
@@ -77,14 +77,10 @@ export class GestureArena {
      * the others related state changes.
      */
     private checkCycle(type?: PointerType) {
+        const keepAliveLastToPointerUp = this.option.isKeepAliveLastPointerUp;
 
-        // When possible and if pointer-down event, creates recognizers by builder.
-        if (type == PointerType.DOWN && this.recognizers.length == 0) {
-            this.recognizers = this.builders.map(e => this.createRecognizer(e));
-        } else
-
-        // Accept a last recognizer that is survivor.
-        if (this.recognizers.length == 1) {
+        // Accept a last un-holded recognizer that is survivor.
+        if (keepAliveLastToPointerUp && type == PointerType.UP && this.recognizers.length == 1) {
             const last = this.recognizers[0];
 
             if(last.isHold == false) this.acceptWith(last);
@@ -92,15 +88,13 @@ export class GestureArena {
     }
 
     handlePointer(event: PointerEvent, type: PointerType) {
-        if (type == PointerType.DOWN) {
-            this.checkCycle(type);
+
+        // When possible and if pointer-down event, creates recognizers by builder.
+        if (type == PointerType.DOWN && this.recognizers.length == 0) {
+            this.recognizers = this.builders.map(e => this.createRecognizer(e));
         }
 
-        // When the pointer are received all, need to accept the last survivor.
-        if (!this.option.isKeepAlivePointerUp || type == PointerType.UP) {
-            queueMicrotask(() => this.checkCycle(type));
-        }
-
+        this.checkCycle(type);
         this.recognizers.forEach(r => r.handlePointer(event, type));
     }
 }

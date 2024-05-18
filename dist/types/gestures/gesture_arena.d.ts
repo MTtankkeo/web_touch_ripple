@@ -1,7 +1,7 @@
 import { GestureRecognizer } from "./gesture_recognizer.js";
 import { GestureRecognizerBuilder, PointerType } from "../type.js";
 export type GestureArenaOption = {
-    isKeepAlivePointerUp: boolean;
+    isKeepAliveLastPointerUp: boolean;
 };
 export declare class GestureArena {
     option?: GestureArenaOption;

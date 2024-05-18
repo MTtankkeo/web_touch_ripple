@@ -6,7 +6,7 @@ import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
 import { LongTapGestureRecognizer } from "../gestures/long_tap";
 
 export class TouchRippleElement extends HTMLElement {
-    arena: GestureArena = new GestureArena({isKeepAlivePointerUp: true});
+    arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
 
     /** Is defined for update the status of added a touch effect. */
     activeEffect?: TouchRippleEffect;
