@@ -79,8 +79,6 @@ export class GestureArena {
     private checkCycle(type?: PointerType) {
         const isKeepAliveLastPointerUp = this.option.isKeepAliveLastPointerUp;
 
-        console.log(this.recognizers.length == 1);
-
         // Accept a last un-holded recognizer that is survivor.
         if (isKeepAliveLastPointerUp && type == PointerType.UP || type == null && this.recognizers.length == 1) {
             const last = this.recognizers[0];
