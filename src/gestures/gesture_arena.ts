@@ -91,6 +91,7 @@ export class GestureArena {
     }
 
     handlePointer(event: PointerEvent, type: PointerType) {
+        
         // When possible and if pointer-down event, creates recognizers by builder.
         if (type == PointerType.DOWN && this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
