@@ -10,6 +10,8 @@ export type GestureArenaOption = {
 /** 
  * Gesture Arena is a simple gesture competition system.
  * See also, this arena is based on the cycle.
+ * 
+ * Gestures are accepted and rejected according to the proper rules.
  */
 export class GestureArena {
     constructor(
@@ -21,21 +23,23 @@ export class GestureArena {
         };
     }
 
-    /** Just a items of factory functions for gesture-recognizer. */
+    /** Just a items of factory functions for gesture recognizer. */
     builders: GestureRecognizerBuilder[] = [];
 
-    /** A currently living gesture-recognizers. */
+    /** A currently living gesture recognizers. */
     private recognizers: GestureRecognizer[] = [];
 
-    /** Registers gesture-recognizer factory builder */
+    /** Registers gesture recognizer factory builder */
     registerBuilder(builder: GestureRecognizerBuilder) {
         this.builders.push(builder);
     }
 
+    /** Adds a given gesture recognizer in the Arena. */
     attach(recognizer: GestureRecognizer) {
         this.recognizers.push(recognizer);
     }
 
+    /** Removes a given gesture recognizer in the Arena. */
     detach(recognizer: GestureRecognizer) {
         this.recognizers = this.recognizers.filter(r => r != recognizer);
     }
@@ -52,6 +56,7 @@ export class GestureArena {
         this.recognizers = [];
     }
 
+    /** Notify a fact of acceptance to a given recognizer and the Arena, all together. */
     acceptWith(target: GestureRecognizer) {
         target.accept(), this.acceptBy(target);
     }
@@ -90,9 +95,15 @@ export class GestureArena {
         }
     }
 
+    /**
+     * Handles a given pointer event properly.
+     * 
+     * When a pointer-down event occurs,
+     * it is considered the beginning of a new gesture cycle.
+     */
     handlePointer(event: PointerEvent, type: PointerType) {
-        
-        // When possible and if pointer-down event, creates recognizers by builder.
+
+        // When a pointer-down event occurs, creates recognizers by builder.
         if (type == PointerType.DOWN && this.recognizers.length == 0) {
             this.recognizers = this.builders.map(e => this.createRecognizer(e));
         }
