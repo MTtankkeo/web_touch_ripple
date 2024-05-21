@@ -1,7 +1,8 @@
 import { GestureRecognizerListener, PointerPosition, PointerType } from "../type";
 export declare enum GestureRecognizerResult {
     ACCEPT = 0,
-    REJECT = 1
+    REJECT = 1,
+    UPDATE = 2
 }
 export declare abstract class GestureRecognizer {
     listeners: GestureRecognizerListener[];

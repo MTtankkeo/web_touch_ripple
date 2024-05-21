@@ -13,7 +13,6 @@ export declare class GestureArena {
     detach(recognizer: GestureRecognizer): void;
     rejectBy(target: GestureRecognizer): void;
     acceptBy(target: GestureRecognizer): void;
-    acceptWith(target: GestureRecognizer): void;
     reset(): void;
     createRecognizer(builder: GestureRecognizerBuilder): GestureRecognizer;
     private checkCycle;

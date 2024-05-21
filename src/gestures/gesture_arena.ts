@@ -56,11 +56,6 @@ export class GestureArena {
         this.recognizers = [];
     }
 
-    /** Notify a fact of acceptance to a given recognizer and the Arena, all together. */
-    acceptWith(target: GestureRecognizer) {
-        target.accept(), this.acceptBy(target);
-    }
-
     /** Resets builders and recognizers in this arena. */
     reset() {
         this.builders = [];
@@ -72,9 +67,11 @@ export class GestureArena {
 
         // Called when the gesture accepted or rejected.
         recognizer.listeners.push(result => {
-            result == GestureRecognizerResult.REJECT
-                ? this.rejectBy(recognizer)
-                : this.acceptBy(recognizer);
+            switch (result) {
+                case GestureRecognizerResult.REJECT: this.rejectBy(recognizer); break;
+                case GestureRecognizerResult.ACCEPT: this.acceptBy(recognizer); break;
+                case GestureRecognizerResult.UPDATE: this.checkCycle(); break;
+            }
         });
 
         return recognizer;
@@ -87,11 +84,11 @@ export class GestureArena {
     private checkCycle(type?: PointerType) {
         const isKeepAliveLastPointerUp = this.option.isKeepAliveLastPointerUp;
 
-        // Accept a last un-holded recognizer that is survivor.
-        if (isKeepAliveLastPointerUp && type == PointerType.UP || type == null && this.recognizers.length == 1) {
+        // Accept a last recognizer that is un-holded survivor.
+        if (isKeepAliveLastPointerUp && (type == PointerType.UP || type == null) && this.recognizers.length == 1) {
             const last = this.recognizers[0];
 
-            if(last.isHold == false) this.acceptWith(last);
+            if(!last.isHold) last.accept();
         }
     }
 

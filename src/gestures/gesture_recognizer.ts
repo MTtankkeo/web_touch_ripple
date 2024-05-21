@@ -3,6 +3,7 @@ import { GestureRecognizerListener, PointerPosition, PointerType } from "../type
 export enum GestureRecognizerResult {
     ACCEPT,
     REJECT,
+    UPDATE,
 }
 
 /* This abstract class implements a fundamental gesture recognizer. */
@@ -21,8 +22,15 @@ export abstract class GestureRecognizer {
     accept() { this.perform(GestureRecognizerResult.ACCEPT), this.onAccept(); }
     reject() { this.perform(GestureRecognizerResult.REJECT), this.onReject(); }
     
-    hold() { this.isHold = true; }
-    release() { this.isHold = false; }
+    hold() {
+        this.isHold = true;
+        this.listeners.forEach(l => l(GestureRecognizerResult.UPDATE));
+    }
+
+    release() {
+        this.isHold = false;
+        this.listeners.forEach(l => l(GestureRecognizerResult.UPDATE));
+    }
 
     onAccept() {}
     onReject() {}
