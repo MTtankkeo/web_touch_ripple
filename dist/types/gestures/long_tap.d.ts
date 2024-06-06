@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 export declare class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
@@ -7,7 +6,7 @@ export declare class LongTapGestureRecognizer extends TouchRippleGestureRecogzie
     onLongTap: VoidFunction;
     tappableDuration: number;
     longtappableDuration: number;
-    timerId: NodeJS.Timeout;
+    timerId: number;
     isStartCalled: boolean;
     constructor(onLongTapStart: GestureEventCallback, onLongTapEnd: VoidFunction, onLongTap: VoidFunction, tappableDuration: number, longtappableDuration: number);
     pointerDown(position: PointerPosition): void;

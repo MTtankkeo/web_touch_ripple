@@ -2,7 +2,7 @@ import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
-    timerIds: NodeJS.Timeout[] = [];
+    timerIds: number[] = [];
 
     /** Whether the gesture can be rejected in the middle. */
     isRejectable: boolean = false;

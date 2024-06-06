@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 export declare class TapGestureRecognizer extends TouchRippleGestureRecogzier {
@@ -8,7 +7,7 @@ export declare class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     onTapReject: GestureEventCallback;
     rejectableDuration: number;
     tappableDuration: number;
-    timerIds: NodeJS.Timeout[];
+    timerIds: number[];
     isRejectable: boolean;
     constructor(onTap: GestureEventCallback, onTapRejectable: GestureEventCallback, onTapAccept: GestureEventCallback, onTapReject: GestureEventCallback, rejectableDuration: number, tappableDuration: number);
     pointerDown(position: PointerPosition): void;

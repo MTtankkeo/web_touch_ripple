@@ -6,10 +6,10 @@ import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
 import { LongTapGestureRecognizer } from "../gestures/long_tap";
 
 export class TouchRippleElement extends HTMLElement {
-    arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
+    private arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
 
     /** Is defined for update the status of added a touch effect. */
-    activeEffect?: TouchRippleEffect;
+    private activeEffect?: TouchRippleEffect;
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
@@ -30,16 +30,18 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     /* Called when a user long press or long clicks or long pointer-down. */
-    private _onlongtap: Function;
+    // private _onlongtap: Function;
 
     /** 
      * Sets a callback function that is called when a user long press or long clicks
      * or long pointer-down.
      */
+    /*
     set onlongtap(callback: Function) {
         this._onlongtap = callback;
         this.initBuiler();
     }
+    */
 
     get child(): HTMLElement {
         return this.firstElementChild as HTMLElement;
@@ -84,6 +86,7 @@ export class TouchRippleElement extends HTMLElement {
             );
         }
 
+        /*
         if (this._onlongtap != null) {
             const longtappableDuration = this.getDurationByName("--longtappable-duration") ?? 1000;
 
@@ -105,6 +108,7 @@ export class TouchRippleElement extends HTMLElement {
                 )
             );
         }
+        */
     }
 
     connectedCallback() {

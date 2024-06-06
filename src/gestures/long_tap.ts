@@ -2,7 +2,7 @@ import { GestureEventCallback, PointerPosition } from "../type";
 import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
 
 export class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
-    timerId: NodeJS.Timeout;
+    timerId: number;
     isStartCalled: boolean = false;
 
     constructor(

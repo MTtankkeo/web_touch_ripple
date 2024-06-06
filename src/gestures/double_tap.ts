@@ -5,7 +5,7 @@ export class DoubleTapGestureRecognizer extends TouchRippleGestureRecogzier {
     /** A total number of taps or clicks by a user. */
     tapCount: number = 0;
 
-    timeId: NodeJS.Timeout;
+    timeId: number;
 
     constructor(public onDoubleTap: GestureEventCallback) {
         super();

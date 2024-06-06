@@ -1,0 +1,4 @@
+
+1. 추후 기능 개발이 완료되면 아래 내용을 README.md 에 업데이트 해야함.
+| --long-tappable-duration | This duration required to define if it is a long tap. | 1s
+| --long-tappable-curve | This is curve about fade-in animation of ripples. | linear

@@ -58,24 +58,17 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 This is can easily implement this by adding the code below or modifying some of it.
 
 ```tsx
-export function TouchRipple({onTap, wait, children}: {
-    onTap?: Function,
-    wait?: boolean,
-    children: VNode,
-}) {
-    const ref = useRef<TouchRippleElement>();
+import "web-touch-ripple";
 
-    useLayoutEffect(() => {
-        const ripple = ref.current;
-        ripple.ontap = onTap;
-        
-        wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
-    }, [onTap, wait]);
+// And then you need to import this react component in /jsx.
+import { TouchRipple } "web-touch-ripple/jsx";
 
+export function TestPage() {
     return (
-        /** @ts-ignore */
-        <touch-ripple ref={ref}>{children}</touch-ripple>
-    );
+        <TouchRipple onTap={() => console.log("tap!")}>
+            <p>Hello World<p>
+        </TouchRipple>
+    )
 }
 ```
 
@@ -95,8 +88,6 @@ export function TouchRipple({onTap, wait, children}: {
 | --tap-preview-duration | The rejectable duration about tap event. | 0.15s
 | --tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
-| --long-tappable-duration | This duration required to define if it is a long tap. | 1s
-| --long-tappable-curve | This is curve about fade-in animation of ripples. | linear
 | --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, ignoring) | overlappable
 
 ## How to customize gestures?

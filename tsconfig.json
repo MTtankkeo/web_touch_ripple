@@ -6,5 +6,7 @@
         "declaration": true,
         "declarationDir": "dist/types/",
         "allowSyntheticDefaultImports": true,
+        "jsx": "preserve",
+        "jsxImportSource": "react"
     },
 }
