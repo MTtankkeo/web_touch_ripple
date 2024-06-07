@@ -8,7 +8,7 @@
         "declarationDir": "dist/types/",
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "Node",
-        "jsx": "preserve",
+        "jsx": "react-jsx",
         "jsxImportSource": "react"
     }
 }

@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+/// <reference types="react" />
 export declare function TouchRipple({ onTap, onDoubleTap, wait, children }: {
     onTap?: VoidFunction;
     onDoubleTap?: VoidFunction;
     wait?: boolean;
-    children: ReactNode;
+    children: JSX.Element;
 }): import("react/jsx-runtime").JSX.Element;

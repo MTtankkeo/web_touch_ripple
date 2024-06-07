@@ -1,9 +1,9 @@
 {
   "name": "web-touch-ripple-jsx",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "web-touch-ripple package of JSX",
   "license": "MIT",
-  "main": "dist/index.jsx",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
     "build": "tsc --project tsconfig.json",

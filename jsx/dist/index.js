@@ -1,3 +1,4 @@
+import { jsx as _jsx } from "react/jsx-runtime";
 import { useLayoutEffect, useRef } from "react";
 export function TouchRipple({ onTap, onDoubleTap, wait, children }) {
     const ref = useRef();
@@ -7,5 +8,5 @@ export function TouchRipple({ onTap, onDoubleTap, wait, children }) {
         ripple.ondoubletap = onDoubleTap;
         wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
     }, [onTap, onDoubleTap, wait]);
-    return (<touch-ripple ref={ref}>{children}</touch-ripple>);
+    return (_jsx("touch-ripple", { ref: ref, children: children }));
 }

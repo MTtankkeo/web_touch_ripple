@@ -1,11 +1,11 @@
-import { ReactNode, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { TouchRippleElement } from "web-touch-ripple";
 
 export function TouchRipple({onTap, onDoubleTap, wait, children}: {
     onTap?: VoidFunction,
     onDoubleTap?: VoidFunction,
     wait?: boolean,
-    children: ReactNode,
+    children: JSX.Element,
 }) {
     const ref = useRef<TouchRippleElement>();
 

@@ -1,6 +1,6 @@
 {
   "name": "web-touch-ripple",
-  "version": "1.1.0-alpha.6",
+  "version": "1.1.0-alpha.8",
   "description": "Visual representation of the pointer event to a user.",
   "repository": "https://github.com/MTtankkeo/web_touch_ripple",
   "bugs": "https://github.com/MTtankkeo/web_touch_ripple/issues",
@@ -15,8 +15,8 @@
     },
     "./jsx": {
       "types": "./jsx/dist/types/index.d.ts",
-      "require": "./jsx/dist/index.jsx",
-      "default": "./jsx/dist/index.jsx"
+      "require": "./jsx/dist/index.js",
+      "default": "./jsx/dist/index.js"
     }
   },
   "type": "module",
