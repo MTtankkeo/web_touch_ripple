@@ -1,6 +1,6 @@
 {
   "name": "web-touch-ripple",
-  "version": "1.1.0-alpha.5",
+  "version": "1.1.0-alpha.6",
   "description": "Visual representation of the pointer event to a user.",
   "repository": "https://github.com/MTtankkeo/web_touch_ripple",
   "bugs": "https://github.com/MTtankkeo/web_touch_ripple/issues",
@@ -8,14 +8,20 @@
   "module": "./dist/index.esm.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/index.umd.js",
+      "default": "./dist/index.esm.js"
+    },
     "./jsx": {
-      "default": "./dist/jsx/index.jsx",
-      "types": "./dist/types/jsx/index.d.ts"
+      "types": "./jsx/dist/types/index.d.ts",
+      "require": "./jsx/dist/index.jsx",
+      "default": "./jsx/dist/index.jsx"
     }
   },
   "type": "module",
   "scripts": {
-    "build": "rollup -c && tsc --jsx preserve --module esnext --outDir dist/jsx src/jsx/index.tsx --noresolve --noEmit --skipLibCheck",
+    "build": "rollup -c",
     "watch": "rollup -c -w"
   },
   "keywords": [
@@ -30,7 +36,6 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
-    "@types/react": "^18.3.3",
     "rollup": "^4.13.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "terser": "^5.29.2",

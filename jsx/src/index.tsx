@@ -1,6 +1,4 @@
 import { ReactNode, useLayoutEffect, useRef } from "react";
-
-// @ts-ignore
 import { TouchRippleElement } from "web-touch-ripple";
 
 export function TouchRipple({onTap, onDoubleTap, wait, children}: {
