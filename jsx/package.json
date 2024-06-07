@@ -1,0 +1,16 @@
+{
+  "name": "@jsx/web-touch-ripple",
+  "version": "1.0.0",
+  "description": "web-touch-ripple package of JSX",
+  "license": "MIT",
+  "main": "dist/index.jsx",
+  "scripts": {
+    "build": "tsc --jsx preserve --module esnext --outDir dist src/index.tsx --noresolve --skipLibCheck"
+  },
+  "peerDependencies": {
+    "web-touch-ripple": "^1.1.0-alpha.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3"
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "ES2022",
+        "target": "ES2015",
+        "removeComments": true,
+        "declaration": true,
+        "declarationDir": "dist/types/",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "Node",
+        "jsx": "preserve",
+        "jsxImportSource": "react"
+    }
+}
