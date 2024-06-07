@@ -18,10 +18,10 @@ This is a solution of converting a string into a function and using it.
 
 ```html
 <!-- Called when a user taps or clicks. -->
-<touch-ripple ontap="console.log('hello world!')">
+<touch-ripple ontap="console.log('tap!')">
     <!-- child of the touch-ripple element must be one. -->
     <h1 style="padding: 15px;">
-        Tappabe
+        Hello, world!
     </h1>
 </touch-ripple>
 ```
@@ -55,31 +55,17 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 ```
 
 ### How to use with react in typescript?
-This is can easily implement this by adding the code below or modifying some of it.
+This is can easily implement this by adding import like the code below.
 
 ```jsx
-import { ReactNode, useLayoutEffect, useRef } from "react";
-import { TouchRippleElement } from "web-touch-ripple";
+import "web-touch-ripple";
+import { TouchRipple } from "web-touch-ripple/jsx";
 
-export function TouchRipple({onTap, onDoubleTap, wait, children}: {
-    onTap?: VoidFunction,
-    onDoubleTap?: VoidFunction,
-    wait?: boolean,
-    children: ReactNode,
-}) {
-    const ref = useRef<TouchRippleElement>();
-
-    useLayoutEffect(() => {
-        const ripple = ref.current;
-        ripple.ontap = onTap;
-        ripple.ondoubletap = onDoubleTap;
-        
-        wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
-    }, [onTap, onDoubleTap, wait]);
-
+export function TestPage() {
     return (
-        /** @ts-ignore */
-        <touch-ripple ref={ref}>{children}</touch-ripple>
+        <TouchRipple onTap={() => console.log("tap!")}>
+            <h1>Hello, world!</h1>
+        </TouchRipple>
     );
 }
 ```

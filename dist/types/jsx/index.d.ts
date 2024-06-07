@@ -4,4 +4,4 @@ export declare function TouchRipple({ onTap, onDoubleTap, wait, children }: {
     onDoubleTap?: VoidFunction;
     wait?: boolean;
     children: ReactNode;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react").JSX.Element;
