@@ -7,16 +7,9 @@
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
-  "exports": {
-    "./jsx": {
-      "default": "./dist/jsx/index.umd.jsx",
-      "module": "./dist/jsx/index.esm.jsx",
-      "types": "./dist/types/jsx/index.d.ts"
-    }
-  },
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && tsc --jsx preserve --module esnext --outDir dist/jsx src/jsx/index.tsx",
     "watch": "rollup -c -w"
   },
   "keywords": [

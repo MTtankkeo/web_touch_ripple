@@ -57,18 +57,30 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 ### How to use with react in typescript?
 This is can easily implement this by adding the code below or modifying some of it.
 
-```tsx
-import "web-touch-ripple";
+```jsx
+import { ReactNode, useLayoutEffect, useRef } from "react";
+import { TouchRippleElement } from "web-touch-ripple";
 
-// And then you need to import this react component in /jsx.
-import { TouchRipple } "web-touch-ripple/jsx";
+export function TouchRipple({onTap, onDoubleTap, wait, children}: {
+    onTap?: VoidFunction,
+    onDoubleTap?: VoidFunction,
+    wait?: boolean,
+    children: ReactNode,
+}) {
+    const ref = useRef<TouchRippleElement>();
 
-export function TestPage() {
+    useLayoutEffect(() => {
+        const ripple = ref.current;
+        ripple.ontap = onTap;
+        ripple.ondoubletap = onDoubleTap;
+        
+        wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
+    }, [onTap, onDoubleTap, wait]);
+
     return (
-        <TouchRipple onTap={() => console.log("tap!")}>
-            <p>Hello World<p>
-        </TouchRipple>
-    )
+        /** @ts-ignore */
+        <touch-ripple ref={ref}>{children}</touch-ripple>
+    );
 }
 ```
 
