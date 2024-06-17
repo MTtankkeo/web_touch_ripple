@@ -7,7 +7,10 @@ export class DoubleTapGestureRecognizer extends TouchRippleGestureRecogzier {
 
     timeId: number;
 
-    constructor(public onDoubleTap: GestureEventCallback) {
+    constructor(
+        public onDoubleTap: GestureEventCallback,
+        public doubleTappableDuration: number, // double tappable duration
+    ) {
         super();
     }
 
@@ -16,7 +19,7 @@ export class DoubleTapGestureRecognizer extends TouchRippleGestureRecogzier {
             this.accept();
         } else {
             this.hold();
-            setTimeout(() => this.reject(), 300);
+            setTimeout(() => this.reject(), this.doubleTappableDuration);
         }
     }
 

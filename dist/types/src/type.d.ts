@@ -12,8 +12,8 @@ export type PointerPosition = {
 };
 export type TouchRippleEffectStatusListener = (status: TouchRippleEffectStatus) => void;
 export declare enum PointerType {
-    DOWN = 0,
-    MOVE = 1,
-    UP = 2,
-    CANCEL = 3
+    DOWN = "down",
+    MOVE = "move",
+    UP = "up",
+    CANCEL = "cancel"
 }

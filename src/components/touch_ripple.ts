@@ -8,6 +8,9 @@ import { LongTapGestureRecognizer } from "../gestures/long_tap";
 export class TouchRippleElement extends HTMLElement {
     private arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
 
+    /** This element is defined when the hover state. */
+    private hoverEffectElement?: HTMLElement;
+
     /** Is defined for update the status of added a touch effect. */
     private activeEffect?: TouchRippleEffect;
 
@@ -47,11 +50,11 @@ export class TouchRippleElement extends HTMLElement {
         return this.firstElementChild as HTMLElement;
     }
 
-    getPropertyByName(name: string, scope = this) {
+    getPropertyByName(name: string, scope = this): string {
         return getComputedStyle(scope).getPropertyValue(name);
     }
 
-    getDurationByName(name: string, scope = this) {
+    getDurationByName(name: string, scope = this): number {
         const value = this.getPropertyByName(name, scope);
 
         return value == "" || value == "none" ? null : value.endsWith("ms")
@@ -59,14 +62,23 @@ export class TouchRippleElement extends HTMLElement {
             : Number(value.replace("s", "")) * 1000;
     }
 
+    getBooleanByName(name: string, scope = this): boolean {
+        const value = this.getPropertyByName(name, scope);
+        if (value == "") {
+            return;
+        }
+
+        return value == "1";
+    }
+
     /** Initializes gesture-recognizer builders for arena. */
     initBuiler() {
         this.arena.reset();
 
-        const previewDuration = this.getDurationByName("--tap-preview-duration") ?? 150;
+        const previewDuration = this.getDurationByName("--ripple-tap-preview-duration") ?? 150;
 
         if (this._ontap != null) {
-            const tappableDuration = this.getDurationByName("--tappable-duration") ?? 0;
+            const tappableDuration = this.getDurationByName("--ripple-tappable-duration") ?? 0;
 
             this.arena.registerBuilder(() =>
                 new TapGestureRecognizer(
@@ -81,8 +93,13 @@ export class TouchRippleElement extends HTMLElement {
         }
 
         if (this._ondoubletap != null) {
+            const doubleTappableDuration = this.getDurationByName("--ripple-double-tappable-duration") ?? 300;
+
             this.arena.registerBuilder(() =>
-                new DoubleTapGestureRecognizer(p => this.showEffect(p, this._ondoubletap, false))
+                new DoubleTapGestureRecognizer(
+                    p => this.showEffect(p, this._ondoubletap, false),
+                    doubleTappableDuration, // ms
+                )
             );
         }
 
@@ -116,6 +133,7 @@ export class TouchRippleElement extends HTMLElement {
         this.style["-webkit-tap-highlight-color"] = "transparent";
 
         requestAnimationFrame(() => {
+            const useHoverEffect = this.getBooleanByName("--ripple-use-hover") ?? true;
             const child = this.child;
             if (child == null) {
                 throw "This element must be exists child element.";
@@ -124,28 +142,60 @@ export class TouchRippleElement extends HTMLElement {
             child.style.position = "relative";
             child.style.overflow = "hidden";
             child.style.userSelect = "none";
-            // child.style.cursor = "pointer";
-            // child.style.transitionDuration = "var(--ripple-hover-fade-duration)";
+            child.style.touchAction = "manipulation";
 
-            // A gestures competition related.
-            {
+            { // A gestures competition related.
                 this.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
                 this.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
                 this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
                 this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
-                this.onpointerleave  = e => this.arena.handlePointer(e, PointerType.CANCEL);
+                this.onmouseleave    = e => this.arena.handlePointer(e as PointerEvent, PointerType.CANCEL); // for touch env
             }
 
-            /*
-            if (!('ontouchstart' in window)) {
-                child.style.transitionDuration = "var(--ripple-hover-fade-duration, 0.2s)";
-                child.style.transitionProperty = "background-color";
-
-                child.onmouseenter = () => this.hoverStart();
-                child.onmouseleave = () => this.hoverStart();
+            if (!('ontouchstart' in window) && useHoverEffect) {
+                child.onmouseenter = () => this.onHoverStart();
+                child.onmouseleave = () => this.onHoverEnd();
             }
-            */
         });
+    }
+
+    private createHoverEffectElement(): HTMLDivElement {
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.top = "0px";
+        div.style.left = "0px";
+        div.style.width = "100%";
+        div.style.height = "100%";
+        div.style.backgroundColor = "var(--ripple-hover, rgba(0, 0, 0, 0.1))";
+        div.style.opacity = "0";
+        div.style.transitionProperty = "opacity";
+        div.style.transitionDuration = "var(--ripple-hover-duration, 0.25s)";
+        div.style.pointerEvents = "none";
+
+        return div;
+    }
+
+    onHoverStart() {
+        const parent = this.child;
+
+        if (this.hoverEffectElement == null) {
+            parent.appendChild(this.hoverEffectElement = this.createHoverEffectElement());
+        }
+    
+        this.hoverEffectElement.ontransitionend = null;
+        this.hoverEffectElement.getBoundingClientRect(); // for reflow
+        this.hoverEffectElement.style.opacity = "1";
+    }
+
+    onHoverEnd() {
+        if (this.hoverEffectElement) {
+            const hoverEffect = this.hoverEffectElement;
+            hoverEffect.style.opacity = "0";
+            hoverEffect.ontransitionend = () => {
+                this.child.removeChild(hoverEffect);
+                this.hoverEffectElement = null;
+            }
+        }
     }
 
     showEffect(
